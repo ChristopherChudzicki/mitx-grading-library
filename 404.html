@@ -7,21 +7,21 @@
         
         
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>ItemGrader - MITxGraders</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
+        <link rel="shortcut icon" href="/img/favicon.ico">
+        <title>MITxGraders</title>
+        <link href="/css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="/css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="/css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="/css/highlight.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        <script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script> 
+        <script src="/js/jquery-1.10.2.min.js"></script>
+        <script src="/js/bootstrap-3.0.3.min.js"></script>
+        <script src="/js/highlight.pack.js"></script> 
     </head>
 
     <body>
@@ -38,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="..">MITxGraders</a>
+            <a class="navbar-brand" href="/">MITxGraders</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -46,22 +46,22 @@
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
                     <li >
-                        <a href="..">Home</a>
+                        <a href="/">Home</a>
                     </li>
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
 <li >
-    <a href="../getting_started/">Getting Started</a>
-</li>
-                            
-<li class="active">
-    <a href="./">ItemGrader</a>
+    <a href="/getting_started/">Getting Started</a>
 </li>
                             
 <li >
-    <a href="../string_grader/">StringGrader</a>
+    <a href="/item_grader/">ItemGrader</a>
+</li>
+                            
+<li >
+    <a href="/string_grader/">StringGrader</a>
 </li>
                         </ul>
                     </li>
@@ -70,23 +70,23 @@
                         <ul class="dropdown-menu">
                             
 <li >
-    <a href="../grading_math/formula_grader/">FormulaGrader</a>
+    <a href="/grading_math/formula_grader/">FormulaGrader</a>
 </li>
                             
 <li >
-    <a href="../grading_math/numerical_grader/">NumericalGrader</a>
+    <a href="/grading_math/numerical_grader/">NumericalGrader</a>
 </li>
                             
 <li >
-    <a href="../grading_math/sampling/">Sampling Sets</a>
+    <a href="/grading_math/sampling/">Sampling Sets</a>
 </li>
                             
 <li >
-    <a href="../grading_math/function_list/">Function List</a>
+    <a href="/grading_math/function_list/">Function List</a>
 </li>
                             
 <li >
-    <a href="../grading_math/renderer/">AsciiMath Renderer Definitions</a>
+    <a href="/grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
                         </ul>
                     </li>
@@ -95,16 +95,16 @@
                         <ul class="dropdown-menu">
                             
 <li >
-    <a href="../grading_lists/list_grader/">ListGrader</a>
+    <a href="/grading_lists/list_grader/">ListGrader</a>
 </li>
                             
 <li >
-    <a href="../grading_lists/single_list_grader/">SingleListGrader</a>
+    <a href="/grading_lists/single_list_grader/">SingleListGrader</a>
 </li>
                         </ul>
                     </li>
                     <li >
-                        <a href="../changelog/">Changelog</a>
+                        <a href="/changelog/">Changelog</a>
                     </li>
                 </ul>
 
@@ -114,16 +114,6 @@
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                    <li >
-                        <a rel="next" href="../getting_started/">
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="../string_grader/">
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
                     <li>
                         <a href="https://github.com/mitodl/mitx-grading-library"><i class="fa fa-github"></i> GitHub</a>
                     </li>
@@ -133,86 +123,25 @@
 </div>
 
         <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#itemgrader">ItemGrader</a></li>
-            <li><a href="#option-listing">Option Listing</a></li>
-    </ul>
-</div></div>
-                <div class="col-md-9" role="main">
 
-<h1 id="itemgrader">ItemGrader<a class="headerlink" href="#itemgrader" title="Permanent link"></a></h1>
-<p>When an individual input needs to be graded, it is graded by an item grader. All item graders work by specifying answers and their corresponding points/messages, as well as an optional message for wrong answers. In these examples, we use <code>StringGrader</code> as an example of how to use a generic ItemGrader. You cannot use a generic ItemGrader by itself.</p>
-<pre><code class="python">grader = StringGrader(
-    answers='cat',
-    wrong_msg='Try again!'
-)
-</code></pre>
+    <div class="row-fluid">
+      <div id="main-content" class="span12">
+        <h1 id="404-page-not-found" style="text-align: center">404</h1>
+        <p style="text-align: center"><strong>Page not found</strong></p>
+      </div>
+    </div>
 
-<p>The <code>answers</code> can be used to specify correct answers, specific feedback messages, and to assign partial credit. The <code>answers</code> key accepts a few formats:</p>
-<ol>
-<li>A single dictionary can be used to specify an answer, feedback, correctness, and partial credit:</li>
-</ol>
-<pre><code class="python">grader = StringGrader(
-    answers={'expect': 'zebra', 'ok': True, 'grade_decimal': 1, 'msg': 'Yay!'},
-    wrong_msg='Try again!'
-)
-</code></pre>
 
-<p>The answers dictionary keys are:
-  - <code>'expect'</code> (required): compared against student answer. Most ItemGraders use strings to specify the <code>'expect'</code> value.
-  - <code>'grade_decimal'</code> (a number between <code>0</code> and <code>1</code>): The partial credit associated with this answer; default value is <code>1</code>.
-  - <code>'ok'</code> (<code>True</code>, <code>False</code>, or <code>'partial'</code>): The answer's correctness; determines icon used by edX. The default value is inferred from <code>grade_decimal</code>.
-  - <code>'msg'</code> (string): A feedback message associated with this answer.</p>
-<ol>
-<li>A single <code>'expect'</code> value: can be used to specify the correct answer. For example,</li>
-</ol>
-<pre><code class="python">grader = StringGrader(
-    answers='cat',
-    # Equivalent to:
-    # answers={'expect': 'cat', 'msg': '', 'grade_decimal': 1, 'ok': True}
-    wrong_msg='Try again!'
-)
-</code></pre>
-
-<p>Again, most ItemGraders use strings to store <code>'expect'</code> values.</p>
-<ol>
-<li>A tuple of dictionaries or strings:</li>
-</ol>
-<pre><code class="python">grader = StringGrader(
-    answers=(
-        # the correct answer
-        'wolf',
-        # an alternative correct answer
-        'canis lupus',
-        # a partially correct answer
-        {'expect': 'dog', 'grade_decimal': 0.5, 'msg': 'No, not dog!'},
-        # a wrong answer with specific feedback
-        {'expect': 'unicorn', 'grade_decimal': 0, 'msg': 'No, not unicorn!'}
-    ),
-    wrong_msg='Try again!'
-)
-</code></pre>
-
-<p>Internally, the ItemGrader converts the answers entry into a tuple of dictionaries. When grading, it asks the specific grading class to grade the response against each possible answer, and selects the best outcome for the student.</p>
-<p>The <code>wrong_msg</code> is only displayed if the score is zero, and there are no other messages.</p>
-<h2 id="option-listing">Option Listing<a class="headerlink" href="#option-listing" title="Permanent link"></a></h2>
-<p>Here is the full list of options specific to an <code>ItemGrader</code>.</p>
-<pre><code class="python">grader = ItemGrader(
-    answers=answer or tuple of answers,
-    wrong_msg=string (default '')
-)
-</code></pre></div>
         </div>
 
         <footer class="col-md-12">
             <hr>
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script>var base_url = '..';</script>
-        <script src="../js/base.js"></script>
-        <script src="../search/require.js"></script>
-        <script src="../search/search.js"></script>
+        <script>var base_url = '';</script>
+        <script src="/js/base.js"></script>
+        <script src="/search/require.js"></script>
+        <script src="/search/search.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">
