@@ -132,7 +132,7 @@
                         
                             
 <li >
-    <a href="../../function_list/">Function List</a>
+    <a href="../../functions/">Function List</a>
 </li>
 
                         
@@ -234,7 +234,7 @@
 <p>MatrixGrader is an extended version of FormulaGrader used to grade mathematical expressions containing scalars, vectors, and matrices. Authors and students may enter matrix (or vector) expressions by using variables sampled from matrices, or by entering a matrix entry-by-entry.</p>
 <h2 id="a-first-example">A first example<a class="headerlink" href="#a-first-example" title="Permanent link"> # </a></h2>
 <p>A typical use of MatrixGrader might look like</p>
-<pre><code class="python">&gt;&gt;&gt; from mitxgraders import *
+<pre><code class="pycon">&gt;&gt;&gt; from mitxgraders import *
 &gt;&gt;&gt; grader1 = MatrixGrader(
 ...   answers='4*A*B^2',
 ...   variables=['A', 'B', 'v'],
@@ -247,7 +247,7 @@
 </code></pre>
 
 <p>The next few lines call the grader as a check function. The inputs <code>'4*A*B^2'</code> and <code>'4*A*B*B'</code> are correct:</p>
-<pre><code class="python">&gt;&gt;&gt; grader1(None, '4*A*B^2')
+<pre><code class="pycon">&gt;&gt;&gt; grader1(None, '4*A*B^2')
 {'grade_decimal': 1, 'msg': '', 'ok': True}
 &gt;&gt;&gt; grader1(None, '4*A*B*B')
 {'grade_decimal': 1, 'msg': '', 'ok': True}
@@ -255,7 +255,7 @@
 </code></pre>
 
 <p>while the input <code>'4*B^2*A'</code> is incorrect because the matrix-sampled variables are non-commutative:</p>
-<pre><code class="python">&gt;&gt;&gt; grader1(None, '4*B^2*A')
+<pre><code class="pycon">&gt;&gt;&gt; grader1(None, '4*B^2*A')
 {'msg': '', 'grade_decimal': 0, 'ok': False}
 
 </code></pre>
@@ -304,7 +304,7 @@
 <h3 id="how-matrixgrader-uses-matharrays">How MatrixGrader uses MathArrays<a class="headerlink" href="#how-matrixgrader-uses-matharrays" title="Permanent link"> # </a></h3>
 <p>Whether a matrix is input entry-by-entry or represented through variables, <code>MathArray</code>s are used to evaluate student expressions.</p>
 <p>For example, consider the grader below.</p>
-<pre><code class="python">&gt;&gt;&gt; grader = MatrixGrader(
+<pre><code class="pycon">&gt;&gt;&gt; grader = MatrixGrader(
 ...     answers='2*A*[1, 2, 3] + v',
 ...     user_constants={
 ...       'A': MathArray([[1, 2, 3], [4, 5, 6]])
@@ -318,7 +318,7 @@
 </code></pre>
 
 <p>When a student inputs <code>v + A*2*[1, 2, 3]</code> to the grader above, a calculation similar to</p>
-<pre><code class="python">&gt;&gt;&gt; v = MathArray([2, -1]) # Really, random samples would be chosen.
+<pre><code class="pycon">&gt;&gt;&gt; v = MathArray([2, -1]) # Really, random samples would be chosen.
 &gt;&gt;&gt; A = MathArray([[1, 2, 3], [4, 5, 6]])
 &gt;&gt;&gt; v + A*2*MathArray([1, 2, 3])  # below is the result of evaluating student input, which would next be compared to author's answer
 MathArray([30, 63])
@@ -513,7 +513,7 @@ MathArray([30, 63])
 </ul>
 <h3 id="a-note-about-vectors">A note about vectors<a class="headerlink" href="#a-note-about-vectors" title="Permanent link"> # </a></h3>
 <p>Vectors are distinct from single-row matrices and single-column matrices, and can be left- or right-multiplied by a matrix:</p>
-<pre><code class="python">&gt;&gt;&gt; vec = MathArray([1, 2, 3])
+<pre><code class="pycon">&gt;&gt;&gt; vec = MathArray([1, 2, 3])
 &gt;&gt;&gt; row = MathArray([[1, 2, 3]])
 &gt;&gt;&gt; col = MathArray([[1], [2], [3]])
 &gt;&gt;&gt; vec + row # raises error
@@ -532,7 +532,7 @@ MathArray([ 9, 12, 15])
 <p>We suggest avoiding single-column and single-row matrices.</p>
 <h3 id="shape-errors">Shape Errors<a class="headerlink" href="#shape-errors" title="Permanent link"> # </a></h3>
 <p>When operations cannot be performed because of shape-mismatch, MathArray raises readable <code>StudentFacingError</code>s. These error messages are intended to be presented directly to students. For example:</p>
-<pre><code class="python">&gt;&gt;&gt; A = MathArray([[1, 2], [3, 4], [5, 6]]) # matrix, shape (3, 2)
+<pre><code class="pycon">&gt;&gt;&gt; A = MathArray([[1, 2], [3, 4], [5, 6]]) # matrix, shape (3, 2)
 &gt;&gt;&gt; B = MathArray([[1, 2], [3, 4]])         # matrix, shape (2, 2)
 &gt;&gt;&gt; v = MathArray([1, 2])                   # vector, shape (2,  )
 
@@ -577,7 +577,7 @@ MathArray([ 9, 12, 15])
 </table>
 <!-- Test the messages -->
 
-<!-- ```python
+<!-- ```pycon
 >>> A + B
 Traceback (most recent call last):
 MathArrayShapeError: Cannot add/subtract a matrix of shape (rows: 3, cols: 2) with a matrix of shape (rows: 2, cols: 2).
@@ -601,7 +601,7 @@ MathArrayShapeError: Cannot raise a non-square matrix to powers.
 </ul>
 <h3 id="parse-errors">Parse errors:<a class="headerlink" href="#parse-errors" title="Permanent link"> # </a></h3>
 <p>For example, student enters <code>'[[1, 2],[3] ]'</code>, a matrix missing an entry in second row:</p>
-<pre><code class="python">&gt;&gt;&gt; grader = MatrixGrader(
+<pre><code class="pycon">&gt;&gt;&gt; grader = MatrixGrader(
 ...     answers='[[1, 2], [3, 4]]',
 ...     max_array_dim=2, # allow students to enter matrices entry-by-entry
 ... )
@@ -617,7 +617,7 @@ MathArrayShapeError: Cannot raise a non-square matrix to powers.
 <p>Such parse errors are <strong>always raised</strong> to students.</p>
 <h3 id="shape-mismatch-errors-during-evaluation">Shape-mismatch errors during evaluation<a class="headerlink" href="#shape-mismatch-errors-during-evaluation" title="Permanent link"> # </a></h3>
 <p>If a student submits an answer that will raise shape-mismatch errors then an error is raised with a helpful message. This avoids consuming one of the student's attempts. For example:</p>
-<pre><code class="python">&gt;&gt;&gt; grader = MatrixGrader(
+<pre><code class="pycon">&gt;&gt;&gt; grader = MatrixGrader(
 ...     answers='[11, 22, 33]',
 ... )
 &gt;&gt;&gt; student_input = '[10, 20, 30] + [1, 2]' # Error! Adding vectors with different shapes
@@ -632,7 +632,7 @@ MathArrayShapeError: Cannot raise a non-square matrix to powers.
 <p>If you would rather mark the student incorrect when shape errors occur (and also consume an attempt), set <code>shape_errors=False</code>.</p>
 <h3 id="shape-mismatch-errors-during-comparison">Shape-mismatch errors during comparison<a class="headerlink" href="#shape-mismatch-errors-during-comparison" title="Permanent link"> # </a></h3>
 <p>If the author's answer is a 3-component vector, and the student submits a different 3-component vector, then they will be marked incorrect. However, if the student submits a 2-component vector or a number, they will receive an error message:</p>
-<pre><code class="python">&gt;&gt;&gt; grader = MatrixGrader(
+<pre><code class="pycon">&gt;&gt;&gt; grader = MatrixGrader(
 ...     answers='[1, 2, 3]',
 ... )
 &gt;&gt;&gt; student_input = '[1, 2, -3]' # wrong answer
@@ -662,7 +662,7 @@ MathArrayShapeError: Cannot raise a non-square matrix to powers.
   - mark students wrong instead of raising an error, and
   - reveal the shape and the type
 we can use:</p>
-<pre><code class="python">&gt;&gt;&gt; grader = MatrixGrader(
+<pre><code class="pycon">&gt;&gt;&gt; grader = MatrixGrader(
 ...     answers='[1, 2, 3]',
 ...     answer_shape_mismatch={
 ...         'is_raised': False,
@@ -676,8 +676,22 @@ we can use:</p>
 </code></pre>
 
 <h2 id="matrix-functions">Matrix Functions<a class="headerlink" href="#matrix-functions" title="Permanent link"> # </a></h2>
-<p>MatrixGrader provides all the default functions of <code>FormulaGrader</code> (<code>sin</code>, <code>cos</code>, etc.) plus some extras such as <code>trans(A)</code> (transpose) and <code>det(A)</code> (determinant). See <a href="" title="../function_list.md">Function Listing</a> for full list</p>
-<h2 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link"> # </a></h2></div>
+<p>MatrixGrader provides all the default functions of <code>FormulaGrader</code> (<code>sin</code>, <code>cos</code>, etc.) plus some extras such as <code>trans(A)</code> (transpose) and <code>det(A)</code> (determinant). See <a href="" title="../functions.md">Mathematical Functions</a> for full list.</p>
+<p>Since <code>MatrixGrader</code> has all of <code>FormulaGrader</code>'s configuration options, additional functions can be supplied through the <code>user_functions</code> configuration key. If you supply addition matrix functions, you may wish you use the <code>specify_domain</code> decorator function. See <a href="../../functions/#specify-domain">Function Listing: Specify Domain</a> for details.</p>
+<h2 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link"> # </a></h2>
+<p><code>MatrixGrader</code> has all of <a href="../../formula_grader/"><code>FormulaGrader</code></a>'s configuration options, plus some extras. The extras are:</p>
+<ul>
+<li><code>max_array_dim</code> (nonnegative int): Controls the maximum <a href="#dimension-and-shape">dimension</a> of arrays that students can enter entry-by-entry. Default is <code>1</code>: vectors can be entered entry-by-entry, but not matrices.</li>
+<li><code>negative_powers</code> (bool): whether negative powers are enabled for square matrices (which calculate powers of matrix inverse). Defaults to <code>True</code>.</li>
+<li><code>shape_errors</code> (bool): See <a href="#shape-mismatch-errors-during-evaluation">Handling Errors: Shape-mismatch errors during evaluation</a>. Defaults to <code>True</code>.</li>
+<li>
+<p><code>answer_shape_mismatch</code> (dict): A dictionary whose keys are listed below. Some or all keys may be set. Unset keys take default values. See <a href="#shape-mismatch-errors-during-comparison">Handling Errors: Shape-mismatch errors during comparison</a> for details.</p>
+<ul>
+<li><code>'is_raised'</code> (bool): defaults to <code>True</code></li>
+<li><code>'msg_detail'</code>: one of <code>None</code>, <code>'type'</code>, or <code>'shape'</code>. Defaults to <code>'type'</code></li>
+</ul>
+</li>
+</ul></div>
         
     </div>
 

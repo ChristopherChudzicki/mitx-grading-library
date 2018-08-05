@@ -1,4 +1,10 @@
+/* make prompt impossible to select for hljs */
 .hljs-prompt {
+  user-select: none;
+}
+
+/* make prompt impossible to select for pygments */
+.gp {
   user-select: none;
 }
 

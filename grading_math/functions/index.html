@@ -203,21 +203,24 @@
         
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#function-listing">Function Listing</a></li>
-            <li class="second-level"><a href="#formulagrader-functions">FormulaGrader Functions</a></li>
+        <li class="first-level active"><a href="#mathematical-functions">Mathematical Functions</a></li>
+            <li class="second-level"><a href="#formulagrader-default-functions">FormulaGrader Default Functions</a></li>
                 
-            <li class="second-level"><a href="#matrixgrader-functions">MatrixGrader Functions</a></li>
+            <li class="second-level"><a href="#matrixgrader-default-functions">MatrixGrader Default Functions</a></li>
                 
+            <li class="second-level"><a href="#the-specify_domain-decorator">The specify_domain decorator</a></li>
+                
+                <li class="third-level"><a href="#example-usage">Example usage</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="function-listing">Function Listing<a class="headerlink" href="#function-listing" title="Permanent link"> # </a></h1>
+<h1 id="mathematical-functions">Mathematical Functions<a class="headerlink" href="#mathematical-functions" title="Permanent link"> # </a></h1>
+<h2 id="formulagrader-default-functions">FormulaGrader Default Functions<a class="headerlink" href="#formulagrader-default-functions" title="Permanent link"> # </a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Below, expressions marked with a * may require our <a href="../renderer/">AsciiMath renderer definitions</a> to display properly in edX.</p>
 </div>
-<h2 id="formulagrader-functions">FormulaGrader Functions<a class="headerlink" href="#formulagrader-functions" title="Permanent link"> # </a></h2>
 <p>By default, all of the following functions are made available to students in <code>FormulaGrader</code> problems.</p>
 <ul>
 <li><code>sin(x)</code> Sine</li>
@@ -258,7 +261,7 @@
 <li><code>im(x)</code> Imaginary part of a complex expression*</li>
 <li><code>conj(x)</code> Complex conjugate of a complex expression*</li>
 </ul>
-<h2 id="matrixgrader-functions">MatrixGrader Functions<a class="headerlink" href="#matrixgrader-functions" title="Permanent link"> # </a></h2>
+<h2 id="matrixgrader-default-functions">MatrixGrader Default Functions<a class="headerlink" href="#matrixgrader-default-functions" title="Permanent link"> # </a></h2>
 <p>In <code>MatrixGrader</code> problems, all <code>FormulaGrader</code> functions are available by default, as are the following extra functions:</p>
 <ul>
 <li><code>abs(x)</code>: absolute value; input can be number or vector</li>
@@ -269,7 +272,37 @@
 <li><code>norm(x)</code>: Frobenius norm, works for scalars, vectors, and matrices</li>
 <li><code>tr(x)</code>: transpose, input must be square matrix</li>
 <li><code>trace(x)</code>: trace</li>
-</ul></div>
+</ul>
+<h2 id="the-specify_domain-decorator">The <code>specify_domain</code> decorator<a class="headerlink" href="#the-specify_domain-decorator" title="Permanent link"> # </a></h2>
+<p>The <code>mitxgraders</code> library provides <code>specify_domain</code> as a way to provide students with useful error messages when adding extra functions to a <code>MatrixGrader</code> problem.</p>
+<h3 id="example-usage">Example usage<a class="headerlink" href="#example-usage" title="Permanent link"> # </a></h3>
+<p>Suppose you have a <code>MatrixGrader</code> problem where you want to provide students with a function <code>rot(vector, axis, angle)</code> that rotates a vector about a given axis by a given angle. You can provide such a function with the <code>user_functions</code> configuration key.</p>
+<pre><code class="pycon">&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; from mitxgraders import MatrixGrader, RealMatrices
+
+&gt;&gt;&gt; def rot(vec, axis, angle):
+...     &quot;&quot;&quot;
+...     Rotate vec by angle around axis. Implemented by Euler-Rodrigues formula:
+...     https://en.wikipedia.org/wiki/Euler-Rodrigues_formula
+...     &quot;&quot;&quot;
+...     unit_axis = axis/np.linalg.norm(axis)
+...     a = np.cos(angle/2)
+...     omega = unit_axis * np.sin(angle/2)
+...     crossed = np.cross(omega, vec)
+...
+...     return vec + 2*a*crossed + 2*np.cross(omega, crossed)
+&gt;&gt;&gt; grader = MatrixGrader(
+...    answers='rot(a, [0, 0, 1], theta)',
+...    variables=['a', 'theta'],
+...    sample_from={
+...        'a': RealVectors(shape=3),
+...    },
+...    user_functions={
+...        'rot': rot
+...    }
+)
+&gt;&gt;&gt; grader(None, 'rot(a, [0, 0, 1], 2*pi + theta)')
+</code></pre></div>
         
     </div>
 
