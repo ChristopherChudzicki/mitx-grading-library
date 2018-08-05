@@ -31,12 +31,17 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>/grading_math/matrix_grader/matrix_grader/</loc>
+     <lastmod>2018-08-04</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>/grading_math/sampling/</loc>
      <lastmod>2018-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>/grading_math/function_list/</loc>
+     <loc>/grading_math/functions/</loc>
      <lastmod>2018-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
