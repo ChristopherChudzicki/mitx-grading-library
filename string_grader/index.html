@@ -24,6 +24,9 @@
 
     <link href="../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="../grading_math/comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -217,37 +226,40 @@
 <h1 id="stringgrader">StringGrader<a class="headerlink" href="#stringgrader" title="Permanent link"> # </a></h1>
 <p>The StringGrader class does a letter-for-letter comparison of the student's answer with the expected answer. It is the simplest grading class, both in code and in usage.</p>
 <p>To use a StringGrader, simply pass in the set of answers you want to grade, as described in the <a href="../item_grader/">ItemGrader documentation</a>.</p>
-<pre><code class="python">grader = StringGrader(
-    answers='cat'
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>This will accept the answer of <code>cat</code>, but not <code>CAT</code> or <code>Cat</code>, as grading is case-sensitive by default.</p>
 <h2 id="case-sensitive">Case Sensitive<a class="headerlink" href="#case-sensitive" title="Permanent link"> # </a></h2>
 <p>To perform case-insensitive grading, pass in the appropriate flag as follows.</p>
-<pre><code class="python">grader = StringGrader(
-    answers='Cat',
-    case_sensitive=False
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;Cat&#39;</span><span class="p">,</span>
+    <span class="n">case_sensitive</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>This will accept <code>Cat</code>, <code>cat</code> and <code>CAT</code>. By default, <code>case_sensitive=True</code>.</p>
 <h2 id="stripping-input">Stripping Input<a class="headerlink" href="#stripping-input" title="Permanent link"> # </a></h2>
 <p>Leading or trailing spaces in an answer rarely change the meaning of the answer. Hence, by default, we strip all leading and trailing spaces from the student input and author-specified answers before comparison. If you want to keep those spaces around for the comparison, you need to disable strip.</p>
-<pre><code class="python">grader = StringGrader(
-    answers='cat',
-    strip=False
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>
+    <span class="n">strip</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>This will accept <code>cat</code>, but will reject answers with leading or trailing spaces. By default, <code>strip=True</code>.</p>
 <h2 id="option-listing">Option Listing<a class="headerlink" href="#option-listing" title="Permanent link"> # </a></h2>
 <p>Here is the full list of options specific to a <code>StringGrader</code>.</p>
-<pre><code class="python">grader = SingleListGrader(
-    case_sensitive=bool (default True),
-    strip=bool (default False)
-)
-</code></pre></div>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">SingleListGrader</span><span class="p">(</span>
+    <span class="n">case_sensitive</span><span class="o">=</span><span class="nb">bool</span> <span class="p">(</span><span class="n">default</span> <span class="bp">True</span><span class="p">),</span>
+    <span class="n">strip</span><span class="o">=</span><span class="nb">bool</span> <span class="p">(</span><span class="n">default</span> <span class="bp">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div></div>
         
     </div>
 

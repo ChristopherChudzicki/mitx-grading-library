@@ -24,6 +24,9 @@
 
     <link href="./css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="./css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="grading_math/comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -225,29 +234,34 @@
 <p>The basic idea of this library is that it contains a number of classes that can be used as the check function for an edX custom response problem. Different classes of grader are used for different inputs. We begin by presenting a brief overview on how the grading classes are used in general.</p>
 <h2 id="using-grading-classes">Using Grading Classes<a class="headerlink" href="#using-grading-classes" title="Permanent link"> # </a></h2>
 <p>All grading classes are instantiated by calling them. Here, <code>GradingClass</code> is a generic grading class (<code>GradingClass</code> does not actually exist).</p>
-<pre><code class="python">grader = GradingClass(options)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+
 
 <p>The options provided to a grading class may be passed in directly, as</p>
-<pre><code class="python">grader = GradingClass(name='value')
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>You can also pass in a configuration dictionary. This may be helpful if using the same configuration for multiple problems.</p>
-<pre><code class="python">options = {'name': 'value'}
-grader = GradingClass(options)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}</span>
+<span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+
 
 <p>You cannot 'mix and match' these two options. If a configuration dictionary is supplied, any keyword arguments are ignored.</p>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"> # </a></h2>
 <p>The options passed to a grading class undergo extensive validation and graders will throw
 errors if instantiated with invalid options.</p>
 <p>A few error messages serve only as warnings (e.g., that you are attempting to override a default constant like <code>pi</code>). These warning errors can be suppressed by setting</p>
-<pre><code class="python">grader = GradingClass(suppress_warnings=True)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">suppress_warnings</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
 
 <p>Every grading class also has a debug option. By default, <code>debug=False</code>. To receive debug information from a given grader, specify <code>debug=True</code>. Some graders will provide more debug information than others.</p>
-<pre><code class="python">grader = GradingClass(debug=True)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
 
 <p>All other options are specific to the grading class in question.</p>
 <h2 id="grading-classes">Grading Classes<a class="headerlink" href="#grading-classes" title="Permanent link"> # </a></h2>
@@ -320,5 +334,5 @@ errors if instantiated with invalid options.</p>
 
 <!--
 MkDocs version : 0.17.5
-Build Date UTC : 2018-08-05 01:00:37
+Build Date UTC : 2018-08-08 16:31:14
 -->

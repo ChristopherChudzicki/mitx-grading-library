@@ -24,6 +24,9 @@
 
     <link href="../../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="../comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -239,120 +248,119 @@
 <li><code>T_{ijk}</code></li>
 <li><code>T_{ijk}^{123}</code> (note that lowered indices must come first)</li>
 </ul>
-<p>The tensor name itself must start with a letter, and may continue with letters and numbers. The indices may be any combination of letters and numbers. After the indices, you may have apostrophes, such as T^{ijk}'' (tensors can be differentiated too!).</p>
+<p>The tensor name itself must start with a letter, and may continue with letters and numbers. The indices may be any combination of letters and numbers. After the indices, you may have apostrophes, such as <code>T^{ijk}''</code> (tensors can be differentiated too!).</p>
 <h2 id="variable-sampling-numbers">Variable Sampling: Numbers<a class="headerlink" href="#variable-sampling-numbers" title="Permanent link"> # </a></h2>
 <p>These sampling sets generate a random number on demand. It may be real or complex.</p>
 <h3 id="realinterval">RealInterval<a class="headerlink" href="#realinterval" title="Permanent link"> # </a></h3>
 <p>Sample from a real interval defined by a <code>start</code> and a <code>stop</code> value. RealInterval can be initialized using explicit values, or an interval.</p>
-<pre><code class="python">&gt;&gt;&gt; from mitxgraders import *
-&gt;&gt;&gt; # Generate random real numbers between 3 and 7
-&gt;&gt;&gt; sampler = RealInterval(start=3, stop=7)
-&gt;&gt;&gt; # This is equivalent to
-&gt;&gt;&gt; sampler = RealInterval([3, 7])
-&gt;&gt;&gt; # The default is [1, 5]
-&gt;&gt;&gt; sampler = RealInterval()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">mitxgraders</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate random real numbers between 3 and 7</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealInterval</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># This is equivalent to</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealInterval</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is [1, 5]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealInterval</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="integerrange">IntegerRange<a class="headerlink" href="#integerrange" title="Permanent link"> # </a></h3>
 <p>Sample from an integer defined by a <code>start</code> and a <code>stop</code> value (both start and stop are included in the range). IntegerRange can be initialized using explicit values, or an interval.</p>
-<pre><code class="python">&gt;&gt;&gt; # Generate random integers between 3 and 7 inclusive
-&gt;&gt;&gt; sampler = IntegerRange(start=3, stop=7)
-&gt;&gt;&gt; # This is equivalent to
-&gt;&gt;&gt; sampler = IntegerRange([3, 7])
-&gt;&gt;&gt; # The default is [1, 5]
-&gt;&gt;&gt; sampler = IntegerRange()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate random integers between 3 and 7 inclusive</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">IntegerRange</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># This is equivalent to</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">IntegerRange</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is [1, 5]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">IntegerRange</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="complexrectangle">ComplexRectangle<a class="headerlink" href="#complexrectangle" title="Permanent link"> # </a></h3>
 <p>Sample complex numbers from a rectangle in the complex plane, specified by a real range and an imaginary range.</p>
-<pre><code class="python">&gt;&gt;&gt; # Select random complex numbers from 0 to 1 + i
-&gt;&gt;&gt; sampler = ComplexRectangle(re=[0, 1], im=[0, 1])
-&gt;&gt;&gt; # The default is re=[1, 3], im=[1, 3]
-&gt;&gt;&gt; sampler = ComplexRectangle()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Select random complex numbers from 0 to 1 + i</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">ComplexRectangle</span><span class="p">(</span><span class="n">re</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">im</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is re=[1, 3], im=[1, 3]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">ComplexRectangle</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="complexsector">ComplexSector<a class="headerlink" href="#complexsector" title="Permanent link"> # </a></h3>
 <p>Sample complex numbers from an annular sector in the complex plane, specified by a modulus range and an argument range.</p>
-<pre><code class="python">&gt;&gt;&gt; import numpy as np
-&gt;&gt;&gt; # Select random complex numbers from inside the unit circle
-&gt;&gt;&gt; sampler = ComplexSector(modulus=[0, 1], argument=[-np.pi, np.pi])
-&gt;&gt;&gt; # The default is modulus=[1, 3], argument=[0, pi/2]
-&gt;&gt;&gt; sampler = ComplexSector()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Select random complex numbers from inside the unit circle</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">ComplexSector</span><span class="p">(</span><span class="n">modulus</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">argument</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is modulus=[1, 3], argument=[0, pi/2]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">ComplexSector</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h2 id="variable-sampling-vectors-and-matrices">Variable Sampling: Vectors and Matrices<a class="headerlink" href="#variable-sampling-vectors-and-matrices" title="Permanent link"> # </a></h2>
 <h3 id="realvectors">RealVectors<a class="headerlink" href="#realvectors" title="Permanent link"> # </a></h3>
 <p>Sample real vectors with specified shape (number of components) and norm.</p>
-<pre><code class="python">&gt;&gt;&gt; # sample real vectors with 4 components and norm between 5 and 10
-&gt;&gt;&gt; sampler = RealVectors(shape=4, norm=[5, 10])
-&gt;&gt;&gt; # For consistency with RealMatrices, shape can be specified as list:
-&gt;&gt;&gt; sampler = RealVectors(shape=[4], norm=[5, 10])
-&gt;&gt;&gt; # The default is 3 component vectors with norm from 1 to 5
-&gt;&gt;&gt; sampler = RealVectors()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># sample real vectors with 4 components and norm between 5 and 10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealVectors</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># For consistency with RealMatrices, shape can be specified as list:</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealVectors</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is 3 component vectors with norm from 1 to 5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealVectors</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="realmatrices">RealMatrices<a class="headerlink" href="#realmatrices" title="Permanent link"> # </a></h3>
 <p>Sample real matrices of a specific shape and norm. (<code>RealMatrices</code> uses the Frobenius norm.)</p>
-<pre><code class="python">&gt;&gt;&gt; # Sample 3 b 2 real matrices with norm between 5 and 10
-&gt;&gt;&gt; sampler = RealMatrices(shape=[3, 2], norm=[5, 10])
-&gt;&gt;&gt; # the default is shape=[2, 2] and norm=[1, 5]
-&gt;&gt;&gt; RealMatrices()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Sample 3 b 2 real matrices with norm between 5 and 10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealMatrices</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">norm</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># the default is shape=[2, 2] and norm=[1, 5]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">RealMatrices</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <h2 id="variable-sampling-generic">Variable Sampling: Generic<a class="headerlink" href="#variable-sampling-generic" title="Permanent link"> # </a></h2>
 <h3 id="discreteset">DiscreteSet<a class="headerlink" href="#discreteset" title="Permanent link"> # </a></h3>
 <p>Sample from a discrete set of values, specified in a tuple. A single value may also be provided, but this case should usually be specified as a constant instead of as a sampling set.</p>
-<pre><code class="python">&gt;&gt;&gt; # Select random numbers from (1, 3, 5, 7, 9)
-&gt;&gt;&gt; sampler = DiscreteSet((1, 3, 5, 7, 9))
-&gt;&gt;&gt; # Always select 3.5
-&gt;&gt;&gt; sampler = DiscreteSet(3.5)
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Select random numbers from (1, 3, 5, 7, 9)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DiscreteSet</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Always select 3.5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DiscreteSet</span><span class="p">(</span><span class="mf">3.5</span><span class="p">)</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="dependentsampler">DependentSampler<a class="headerlink" href="#dependentsampler" title="Permanent link"> # </a></h3>
 <p>Compute a value for a variable based on the values of other variables. The sampler must be initialized with a list of variables that it depends on, as well as the formula used to perform the computation. The formula can use any base functions, but no user-defined functions. DependentSamplers can depend on other dependent variables. If you construct a self-referential chain, an error will occur.</p>
-<pre><code class="python">&gt;&gt;&gt; # Set radius based on the random values of x, y and z
-&gt;&gt;&gt; sampler = DependentSampler(depends=[&quot;x&quot;, &quot;y&quot;, &quot;z&quot;], formula=&quot;sqrt(x^2+y^2+z^2)&quot;)
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Set radius based on the random values of x, y and z</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DependentSampler</span><span class="p">(</span><span class="n">depends</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;sqrt(x^2+y^2+z^2)&quot;</span><span class="p">)</span>
+</pre></div>
 
-</code></pre>
 
 <h2 id="function-sampling">Function Sampling<a class="headerlink" href="#function-sampling" title="Permanent link"> # </a></h2>
 <p>When a random function can be specified, we need a sampling set that returns a random function on demand.</p>
 <h3 id="specificfunctions">SpecificFunctions<a class="headerlink" href="#specificfunctions" title="Permanent link"> # </a></h3>
 <p>Samples functions from a specific list of functions. You can also specify just a single function, but usually this shouldn't be done as a sampling set.</p>
-<pre><code class="python">&gt;&gt;&gt; # Select either sin or cos randomly
-&gt;&gt;&gt; functionsampler = SpecificFunctions([np.cos, np.sin])
-&gt;&gt;&gt; # Always select a single lambda function
-&gt;&gt;&gt; functionsampler = SpecificFunctions(lambda x: x*x)
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Select either sin or cos randomly</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">SpecificFunctions</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Always select a single lambda function</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">SpecificFunctions</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
 
-</code></pre>
 
 <h3 id="randomfunction">RandomFunction<a class="headerlink" href="#randomfunction" title="Permanent link"> # </a></h3>
 <p>Generate a random well-behaved function. The function is constructed from the sum of sinusoids with random amplitudes, frequencies and phases. It oscillates about a specified center value with up to a specified amplitude.</p>
-<pre><code class="python">&gt;&gt;&gt; # Generate a random function
-&gt;&gt;&gt; functionsampler = RandomFunction(center=1, amplitude=2)
-&gt;&gt;&gt; # The default is center=0, amplitude=10
-&gt;&gt;&gt; functionsampler = RandomFunction()
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate a random function</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is center=0, amplitude=10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">()</span>
+</pre></div>
 
-</code></pre>
 
 <p>You can control how many random sinusoids are added together by specifying <code>num_terms</code>.</p>
-<pre><code class="python">&gt;&gt;&gt; # Generate a random sinusoid
-&gt;&gt;&gt; functionsampler = RandomFunction(num_terms=1)
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate a random sinusoid</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">(</span><span class="n">num_terms</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
 
-</code></pre>
 
 <p>You can also generate a non-unary function by specifying the input dimension, and generate vector output by specifying the output dimension.</p>
-<pre><code class="python">&gt;&gt;&gt; # Generate a function that takes in two values and outputs a 3D vector
-&gt;&gt;&gt; functionsampler = RandomFunction(input_dim=2, output_dim=3)
-
-</code></pre></div>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate a function that takes in two values and outputs a 3D vector</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div></div>
         
     </div>
 

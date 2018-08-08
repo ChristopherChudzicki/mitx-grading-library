@@ -24,6 +24,9 @@
 
     <link href="../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="../grading_math/comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -212,21 +221,23 @@
 
 <h1 id="itemgrader">ItemGrader<a class="headerlink" href="#itemgrader" title="Permanent link"> # </a></h1>
 <p>When an individual input needs to be graded, it is graded by an item grader. All item graders work by specifying answers and their corresponding points/messages, as well as an optional message for wrong answers. In these examples, we use <code>StringGrader</code> as an example of how to use a generic ItemGrader. You cannot use a generic ItemGrader by itself.</p>
-<pre><code class="python">grader = StringGrader(
-    answers='cat',
-    wrong_msg='Try again!'
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>The <code>answers</code> can be used to specify correct answers, specific feedback messages, and to assign partial credit. The <code>answers</code> key accepts a few formats:</p>
 <ol>
 <li>A single dictionary can be used to specify an answer, feedback, correctness, and partial credit:</li>
 </ol>
-<pre><code class="python">grader = StringGrader(
-    answers={'expect': 'zebra', 'ok': True, 'grade_decimal': 1, 'msg': 'Yay!'},
-    wrong_msg='Try again!'
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;Yay!&#39;</span><span class="p">},</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>The answers dictionary keys are:
   - <code>'expect'</code> (required): compared against student answer. Most ItemGraders use strings to specify the <code>'expect'</code> value.
@@ -236,42 +247,44 @@
 <ol>
 <li>A single <code>'expect'</code> value: can be used to specify the correct answer. For example,</li>
 </ol>
-<pre><code class="python">grader = StringGrader(
-    answers='cat',
-    # Equivalent to:
-    # answers={'expect': 'cat', 'msg': '', 'grade_decimal': 1, 'ok': True}
-    wrong_msg='Try again!'
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>
+    <span class="c1"># Equivalent to:</span>
+    <span class="c1"># answers={&#39;expect&#39;: &#39;cat&#39;, &#39;msg&#39;: &#39;&#39;, &#39;grade_decimal&#39;: 1, &#39;ok&#39;: True}</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>Again, most ItemGraders use strings to store <code>'expect'</code> values.</p>
 <ol>
 <li>A tuple of dictionaries or strings:</li>
 </ol>
-<pre><code class="python">grader = StringGrader(
-    answers=(
-        # the correct answer
-        'wolf',
-        # an alternative correct answer
-        'canis lupus',
-        # a partially correct answer
-        {'expect': 'dog', 'grade_decimal': 0.5, 'msg': 'No, not dog!'},
-        # a wrong answer with specific feedback
-        {'expect': 'unicorn', 'grade_decimal': 0, 'msg': 'No, not unicorn!'}
-    ),
-    wrong_msg='Try again!'
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">(</span>
+        <span class="c1"># the correct answer</span>
+        <span class="s1">&#39;wolf&#39;</span><span class="p">,</span>
+        <span class="c1"># an alternative correct answer</span>
+        <span class="s1">&#39;canis lupus&#39;</span><span class="p">,</span>
+        <span class="c1"># a partially correct answer</span>
+        <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;No, not dog!&#39;</span><span class="p">},</span>
+        <span class="c1"># a wrong answer with specific feedback</span>
+        <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;unicorn&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;No, not unicorn!&#39;</span><span class="p">}</span>
+    <span class="p">),</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>Internally, the ItemGrader converts the answers entry into a tuple of dictionaries. When grading, it asks the specific grading class to grade the response against each possible answer, and selects the best outcome for the student.</p>
 <p>The <code>wrong_msg</code> is only displayed if the score is zero, and there are no other messages.</p>
 <h2 id="option-listing">Option Listing<a class="headerlink" href="#option-listing" title="Permanent link"> # </a></h2>
 <p>Here is the full list of options specific to an <code>ItemGrader</code>.</p>
-<pre><code class="python">grader = ItemGrader(
-    answers=answer or tuple of answers,
-    wrong_msg=string (default '')
-)
-</code></pre></div>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ItemGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="n">answer</span> <span class="ow">or</span> <span class="nb">tuple</span> <span class="n">of</span> <span class="n">answers</span><span class="p">,</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="n">string</span> <span class="p">(</span><span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div></div>
         
     </div>
 

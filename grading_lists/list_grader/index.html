@@ -24,6 +24,9 @@
 
     <link href="../../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="../../grading_math/comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -224,151 +233,160 @@
 <p>A <code>ListGrader</code> is used to grade a list of student inputs wherein each input is entered in a separate answer box. (In contrast, <code>SingleListGrader</code> can be used to grade a list of items entered all at once into a single answer box.) ListGraders work by farming out individual items to subgraders, and then collecting the results and working out the optimal farming scheme for the student.</p>
 <h2 id="basic-usage">Basic usage<a class="headerlink" href="#basic-usage" title="Permanent link"> # </a></h2>
 <p>In this example, each input is checked against the corresponding answer, using <code>StringGrader</code> as the subgrader.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=['cat', 'dog'],
-    subgraders=StringGrader()
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">StringGrader</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>Each element of answers is set as an answer that is passed as the answers key into the subgrader. This should be set up as two input boxes that the student types in.</p>
 <p>In the above example, the item grader just sees single strings as the answer. You can do more complicated things though, like the following.</p>
-<pre><code class="python">answer1 = (
-    {'expect': 'zebra', 'grade_decimal': 1},
-    {'expect': 'horse', 'grade_decimal': 0.45},
-    {'expect': 'unicorn', 'grade_decimal': 0, 'msg': 'Unicorn? Really?'}
-)
-answer2 = (
-    {'expect': 'cat', 'grade_decimal': 1},
-    {'expect': 'feline', 'grade_decimal': 0.5}
-)
-grader = ListGrader(
-    answers=[answer1, answer2],
-    subgraders=StringGrader()
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">answer1</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;horse&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;unicorn&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;Unicorn? Really?&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">answer2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;feline&#39;</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span><span class="n">answer1</span><span class="p">,</span> <span class="n">answer2</span><span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">StringGrader</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>In this example, the grader will try assigning the first input to answer1 and the second to answer2, and computing the total score. Then it will repeat, with the inputs switched. The student will receive the highest grade. So, note that while <code>cat</code> and <code>unicorn</code> will get the unicorn message (and 1/2 points), <code>zebra</code> and <code>unicorn</code> will not (and also get 1/2 points).</p>
 <h2 id="ordered-input">Ordered Input<a class="headerlink" href="#ordered-input" title="Permanent link"> # </a></h2>
 <p>By default, the ListGrader doesn't care what order the inputs are given in, so "cat" and "dog" is equivalent to "dog" and "cat". If you want the inputs to be ordered, simply set ordered to True.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=['cat', 'dog'],
-    subgraders=StringGrader(),
-    ordered=True
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;dog&#39;</span><span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">StringGrader</span><span class="p">(),</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>Now, "cat" and "dog" will receive full credit, but "dog" and "cat" will receive none.</p>
 <h2 id="multiple-graders">Multiple Graders<a class="headerlink" href="#multiple-graders" title="Permanent link"> # </a></h2>
 <p>If you have inhomogeneous inputs, you can grade them using different graders. Simply give a list of subgraders, and the data will be passed into the graders in that order. Note that the length of answers must be the same as the number of subgraders in this case. Further note that you must set ordered to True when using a list of subgraders.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=['cat', 'x^2+1'],
-    subgraders=[StringGrader(), FormulaGrader(variables=[&quot;x&quot;])],
-    ordered=True
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;x^2+1&#39;</span><span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="p">[</span><span class="n">StringGrader</span><span class="p">(),</span> <span class="n">FormulaGrader</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])],</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <h2 id="singlelistgraders-in-listgrader">SingleListGraders in ListGrader<a class="headerlink" href="#singlelistgraders-in-listgrader" title="Permanent link"> # </a></h2>
 <p>Some questions will require nested list graders. Simple versions can make use of a <code>SingleListGrader</code> subgrader, as in the following example.</p>
 <p>Consider two input boxes, where the first should be a comma-separated list of even numbers beneath 5, and the second should be a comma-separated list of odd numbers beneath 5. The order of the boxes is important, but within each box, the order becomes unimportant. Here's how you can encode this type of problem.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=[
-        ['2', '4'],
-        ['1', '3']
-    ],
-    subgraders=SingleListGrader(
-        subgrader=NumericalGrader()
-    ),
-    ordered=True
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">SingleListGrader</span><span class="p">(</span>
+        <span class="n">subgrader</span><span class="o">=</span><span class="n">NumericalGrader</span><span class="p">()</span>
+    <span class="p">),</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>The nested <code>SingleListGrader</code> will be used to grade the first input box against an unordered answer of 2 and 4, and then the second input box against an unordered answer of 1 and 3.</p>
 <h2 id="grouped-inputs">Grouped Inputs<a class="headerlink" href="#grouped-inputs" title="Permanent link"> # </a></h2>
 <p>If you find yourself wanting to nest ListGraders, then you will need to specify how the inputs should be grouped together to be passed to the subgraders. A simple example would be to ask for the name and number of each animal in a picture. Each name/number group needs to be graded together. Here is an example of such a question.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=[
-        ['cat', '1'],
-        ['dog', '2'],
-        ['tiger', '3']
-    ],
-    subgraders=ListGrader(
-        subgraders=[StringGrader(), NumericalGrader()],
-        ordered=True
-    ),
-    grouping=[1, 1, 2, 2, 3, 3]
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;dog&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;tiger&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">]</span>
+    <span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">ListGrader</span><span class="p">(</span>
+        <span class="n">subgraders</span><span class="o">=</span><span class="p">[</span><span class="n">StringGrader</span><span class="p">(),</span> <span class="n">NumericalGrader</span><span class="p">()],</span>
+        <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">),</span>
+    <span class="n">grouping</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>In this case, the second level of grader is receiving multiple inputs, and so itself needs to be a ListGrader. The grouping key specifies which group each input belongs to. In this case, answers 1 and 2 will be combined into a list and fed to the subgrader as group 1, as will 3 and 4 as group 2, and 5 and 6 as group 3. The third level of grader (StringGrader and NumericalGrader) will then receive a list of two inputs, and each of the items in the answers. Because this is an unordered list, the <code>ListGrader</code> will find the optimal ordering of (animal, number) pairs.</p>
 <p>The grouping keys must be integers starting at 1 and increasing. If you have N groups, then all numbers from 1 to N must be present in the grouping, but they need not be in monotonic order. So for example, [1, 2, 1, 2] is a valid grouping. For unordered groups, the groupings must each have the same number of elements.</p>
 <p>Here is another example. In this case, we have ordered entry, so we can specify a list of subgraders. We have three items in the first grouping and one item in the second, so we use a <code>ListGrader</code> for the first grouping, and a <code>StringGrader</code> for the second. Note that the first entry in answers is a list that is passed directly into the <code>ListGrader</code>, while the second entry is just a string. This second-level <code>ListGrader</code> is unordered.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=[
-        ['bat', 'ghost', 'pumpkin'],
-        'Halloween'
-    ],
-    subgraders=[
-        ListGrader(
-            subgraders=StringGrader()
-        ),
-        StringGrader()
-    ],
-    ordered=True,
-    grouping=[1, 1, 1, 2]
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;bat&#39;</span><span class="p">,</span> <span class="s1">&#39;ghost&#39;</span><span class="p">,</span> <span class="s1">&#39;pumpkin&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Halloween&#39;</span>
+    <span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">ListGrader</span><span class="p">(</span>
+            <span class="n">subgraders</span><span class="o">=</span><span class="n">StringGrader</span><span class="p">()</span>
+        <span class="p">),</span>
+        <span class="n">StringGrader</span><span class="p">()</span>
+    <span class="p">],</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">grouping</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>Our last pair of examples are for a math class, where we have a matrix that has two eigenvalues, and each eigenvalue has a corresponding eigenvector. We start by grouping the eigenvalue and eigenvector boxes together, and then grade the groups in an unordered fashion. The eigenvectors are normalized, but have a sign ambiguity. A tuple contains both possible answers, and the grader will accept either of them.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=[
-        ['1', (['1', '0'], ['-1', '0'])],
-        ['-1', (['0', '1'], ['0', '-1'])],
-    ],
-    subgraders=ListGrader(
-        subgraders=[
-            NumericalGrader(),
-            SingleListGrader(
-                subgrader=NumericalGrader(),
-                ordered=True
-            )
-        ],
-        ordered=True
-    ),
-    grouping=[1, 1, 2, 2]
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">])],</span>
+        <span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">])],</span>
+    <span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">ListGrader</span><span class="p">(</span>
+        <span class="n">subgraders</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">NumericalGrader</span><span class="p">(),</span>
+            <span class="n">SingleListGrader</span><span class="p">(</span>
+                <span class="n">subgrader</span><span class="o">=</span><span class="n">NumericalGrader</span><span class="p">(),</span>
+                <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+        <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+    <span class="p">),</span>
+    <span class="n">grouping</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <p>This example has four input boxes, with the first and third being graded by a <code>NumericalGrader</code>, and the second and fourth being graded by a <code>SingleListGrader</code>.</p>
 <p>It is possible to specify a grouping on a nested <code>ListGrader</code>. The outer <code>ListGrader</code> must also have a grouping specified if doing so. Here is the same grader as above, where instead of taking the eigenvectors in a single input box list, there are four boxes to input each of the four vector components.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=[
-        ['1', (['1', '0'], ['-1', '0'])],
-        ['-1', (['0', '1'], ['0', '-1'])],
-    ],
-    subgraders=ListGrader(
-        subgraders=[
-            NumericalGrader(),
-            ListGrader(
-                subgraders=NumericalGrader(),
-                ordered=True
-            )
-        ],
-        ordered=True,
-        grouping=[1, 2, 2]
-    ),
-    grouping=[1, 1, 1, 2, 2, 2]
-)
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">])],</span>
+        <span class="p">[</span><span class="s1">&#39;-1&#39;</span><span class="p">,</span> <span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;-1&#39;</span><span class="p">])],</span>
+    <span class="p">],</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">ListGrader</span><span class="p">(</span>
+        <span class="n">subgraders</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">NumericalGrader</span><span class="p">(),</span>
+            <span class="n">ListGrader</span><span class="p">(</span>
+                <span class="n">subgraders</span><span class="o">=</span><span class="n">NumericalGrader</span><span class="p">(),</span>
+                <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span>
+            <span class="p">)</span>
+        <span class="p">],</span>
+        <span class="n">ordered</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+        <span class="n">grouping</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">),</span>
+    <span class="n">grouping</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
 
 <h2 id="option-listing">Option Listing<a class="headerlink" href="#option-listing" title="Permanent link"> # </a></h2>
 <p>Here is the full list of options specific to a <code>ListGrader</code>.</p>
-<pre><code class="python">grader = ListGrader(
-    answers=list,
-    subgraders=AbstractGrader or list of AbstractGraders,
-    ordered=bool, (default False)
-    grouping=list
-)
-</code></pre></div>
+<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ListGrader</span><span class="p">(</span>
+    <span class="n">answers</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+    <span class="n">subgraders</span><span class="o">=</span><span class="n">AbstractGrader</span> <span class="ow">or</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">AbstractGraders</span><span class="p">,</span>
+    <span class="n">ordered</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="p">(</span><span class="n">default</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">grouping</span><span class="o">=</span><span class="nb">list</span>
+<span class="p">)</span>
+</pre></div></div>
         
     </div>
 

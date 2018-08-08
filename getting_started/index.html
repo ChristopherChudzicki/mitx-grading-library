@@ -24,6 +24,9 @@
 
     <link href="../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -138,6 +141,12 @@
                         
                             
 <li >
+    <a href="../grading_math/comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../grading_math/renderer/">AsciiMath Renderer Definitions</a>
 </li>
 
@@ -216,48 +225,51 @@
 <h2 id="usage-in-edx">Usage in edX<a class="headerlink" href="#usage-in-edx" title="Permanent link"> # </a></h2>
 <p>Download <a href="../python_lib.zip">python_lib.zip</a> and place it in your static folder (XML workflow) or upload it as a file asset (Studio workflow). If you already have a python_lib.zip, you'll need to merge ours with yours and re-zip. If you want to use our AsciiMath renderer definitions, place the <a href="../MjxPrep.js">MjxPrep.js</a> file in your static folder (XML) or upload the file to your course (Studio).</p>
 <h2 id="mitxgraders-reusable-customresponse-check-functions">MITxGraders: Reusable CustomResponse Check Functions<a class="headerlink" href="#mitxgraders-reusable-customresponse-check-functions" title="Permanent link"> # </a></h2>
-<p>A custom response problem is defined using the <code>&lt;customresponse&gt;</code> tag. It needs to be supplied with a particular type of Python function that edX calls a check function (or "cfn"). The mitxgraders library provides reusable check functions. The basic usage pattern is:</p>
-<pre><code class="xml">&lt;script type=&quot;text/python&quot; system_path=&quot;python_lib&quot;&gt;
+<p>A custom response problem is defined using the <code>&lt;customresponse&gt;</code> tag. It needs to be supplied with a particular type of Python function that edX calls a check function (or "cfn"). The <code>mitxgraders</code> library provides reusable check functions. The basic usage pattern is:</p>
+<div class="codehilite"><pre><span></span><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/python&quot;</span> <span class="na">system_path=</span><span class="s">&quot;python_lib&quot;</span><span class="nt">&gt;</span>
 from mitxgraders import *
 grader = GraderType(
     [configuration]
 )
-&lt;/script&gt;
+<span class="nt">&lt;/script&gt;</span>
 
-&lt;customresponse cfn=&quot;grader&quot;&gt;
-    &lt;textline/&gt;
-&lt;/customresponse&gt;
-</code></pre>
+<span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;textline/&gt;</span>
+<span class="nt">&lt;/customresponse&gt;</span>
+</pre></div>
+
 
 <p>The configuration depends on the type of grader that you're using. Note that all answers must be passed through the configuration. In particular, the <code>expect</code>  attribute on <code>&lt;customresponse&gt;</code> tag is ignored by our graders (but can be used to display an answer string to students).</p>
 <p>Here is an example where we use a StringGrader with answer <code>cat</code>.</p>
-<pre><code class="xml">&lt;script type=&quot;text/python&quot; system_path=&quot;python_lib&quot;&gt;
+<div class="codehilite"><pre><span></span><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/python&quot;</span> <span class="na">system_path=</span><span class="s">&quot;python_lib&quot;</span><span class="nt">&gt;</span>
 from mitxgraders import *
 grader = StringGrader(
-    answers='cat'
+    answers=&#39;cat&#39;
 )
-&lt;/script&gt;
+<span class="nt">&lt;/script&gt;</span>
 
-&lt;customresponse cfn=&quot;grader&quot;&gt;
-    &lt;textline correct_answer=&quot;cat&quot;/&gt;
-&lt;/customresponse&gt;
-</code></pre>
+<span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;textline</span> <span class="na">correct_answer=</span><span class="s">&quot;cat&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/customresponse&gt;</span>
+</pre></div>
+
 
 <p>The <code>expect</code> keyword is ignored by the grader, but is shown when students click on "Show Answer". This works only for single-input problems.</p>
 <p>Here is another example where we use a ListGrader to grade two numbers in an unordered fashion.</p>
-<pre><code class="xml">&lt;script type=&quot;text/python&quot; system_path=&quot;python_lib&quot;&gt;
+<div class="codehilite"><pre><span></span><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/python&quot;</span> <span class="na">system_path=</span><span class="s">&quot;python_lib&quot;</span><span class="nt">&gt;</span>
 from mitxgraders import *
 grader = ListGrader(
-    answers=['1', '2'],
+    answers=[&#39;1&#39;, &#39;2&#39;],
     subgraders=FormulaGrader()
 )
-&lt;/script&gt;
+<span class="nt">&lt;/script&gt;</span>
 
-&lt;customresponse cfn=&quot;grader&quot;&gt;
-    &lt;textline correct_answer=&quot;1&quot;/&gt;
-    &lt;textline correct_answer=&quot;2&quot;/&gt;
-&lt;/customresponse&gt;
-</code></pre>
+<span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;textline</span> <span class="na">correct_answer=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;textline</span> <span class="na">correct_answer=</span><span class="s">&quot;2&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/customresponse&gt;</span>
+</pre></div>
+
 
 <p>Here, the <code>correct_answer</code> entries are shown to students when they click "Show Answer". These values are not provided to the grader. The <code>correct_answer</code> attributes can also be used for single-input problems.</p></div>
         

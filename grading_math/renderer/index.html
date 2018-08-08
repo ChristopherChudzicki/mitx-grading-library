@@ -24,6 +24,9 @@
 
     <link href="../../css/cinder_tweaks.css" rel="stylesheet">
 
+
+    <link href="../../css/readthedocs.css" rel="stylesheet">
+
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -137,6 +140,12 @@
 
                         
                             
+<li >
+    <a href="../comparer_functions/">Comparer Functions</a>
+</li>
+
+                        
+                            
 <li class="active">
     <a href="./">AsciiMath Renderer Definitions</a>
 </li>
@@ -182,7 +191,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="next" href="../functions/">
+                        <a rel="next" href="../comparer_functions/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -214,10 +223,11 @@
 
 <h1 id="asciimath-renderer-definitions">AsciiMath Renderer Definitions<a class="headerlink" href="#asciimath-renderer-definitions" title="Permanent link"> # </a></h1>
 <p>When math input is expected from students, edX offers a math preview that attempts to show their expression in normal mathematical notation. There are two ways to provide this preview:</p>
-<pre><code class="XML">&lt;formulaequationinput/&gt;
+<div class="codehilite"><pre><span></span><span class="nt">&lt;formulaequationinput/&gt;</span>
 or
-&lt;textline math=&quot;1&quot;/&gt;
-</code></pre>
+<span class="nt">&lt;textline</span> <span class="na">math=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+
 
 <p>The <code>formulaequationinput</code> tag uses server-side parsing and rendering to display the preview to the student. By and large, the preview from <code>formulaequationinput</code> is better than that of <code>textline</code>, as it treats functions correctly, and displays a number of LaTeX symbols natively. The downsides to <code>formulaequationinput</code> are that it doesn't recognize vectors such as <code>vecx</code> or <code>hatx</code>, the factorial and conjugation functions just apply as <code>fact(x)</code> and <code>conj(x)</code>, and because the processing is done server-side, we are unable to enhance the display at all.</p>
 <p>The <code>textline</code> tag treats the student input as AsciiMath for the purpose of generating a preview, using MathJax to render it. While the preview does a reasonably good job, there are many situations where it falls down, even for standard edX functions (for example, try typing in <code>1/arctanh(x)</code> in textline box!). Because this is done client-side through javascript, it's possible to supplement the AsciiMath definitions to handle new situations. We have constructed a series of renderer definitions to supplement the standard AsciiMath definitions in order to provide better previews.</p>
@@ -225,14 +235,16 @@ or
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link"> # </a></h2>
 <p>The renderer definitions are located in a javascript file, <code>MJxPrep.js</code>, which should be uploaded to the static assets folder for your course. This javascript file loads two components: symbol definitions and a preprocessor.</p>
 <p>The symbol definitions are used to teach AsciiMath how to display various functions properly, such as <code>re</code>, <code>im</code>, <code>arctanh</code> etc. To load the symbol definitions in a problem, place the following HTML code somewhere in the problem.</p>
-<pre><code class="XML">&lt;script type=&quot;text/javascript&quot; src=&quot;/static/MJxPrep.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;/static/MJxPrep.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
 
-<p>Some functions are too complex for a symbol definition, and need the student's input to be preprocessed into AsciiMath before rendering. These functions are <code>log10</code>, <code>log2</code>, <code>fact</code> and <code>factorial</code>. To use these, you need to add <code>preprocessorClassName</code> and <code>preprocessorSrc</code> properties to any textline tags that use the preprocessor.</p>
-<pre><code class="XML">&lt;customresponse cfn=&quot;grader&quot;&gt;
-    &lt;textline correct_answer=&quot;1/fact(5)&quot; math=&quot;1&quot; preprocessorClassName=&quot;MJxPrep&quot; preprocessorSrc=&quot;/static/MJxPrep.js&quot;/&gt;
-&lt;/customresponse&gt;
-</code></pre>
+
+<p>Some functions are too complex for a symbol definition, and need the student's input to be preprocessed into AsciiMath before rendering. These functions are <code>log10</code>, <code>log2</code>, <code>fact</code> and <code>factorial</code>. To use these, you need to add <code>preprocessorClassName</code> and <code>preprocessorSrc</code> properties to any <code>&lt;textline/&gt;</code> tags that use the preprocessor.</p>
+<div class="codehilite"><pre><span></span><span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;textline</span> <span class="na">correct_answer=</span><span class="s">&quot;1/fact(5)&quot;</span> <span class="na">math=</span><span class="s">&quot;1&quot;</span> <span class="na">preprocessorClassName=</span><span class="s">&quot;MJxPrep&quot;</span> <span class="na">preprocessorSrc=</span><span class="s">&quot;/static/MJxPrep.js&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/customresponse&gt;</span>
+</pre></div>
+
 
 <p>If you use the preprocessor in your problem, you get the symbol definitions as well (you don't need to load them separately).</p>
 <h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link"> # </a></h2>
