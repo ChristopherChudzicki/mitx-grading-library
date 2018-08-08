@@ -72,19 +72,13 @@
                 <ul class="nav navbar-nav">
                 
                 
-                    <li >
-                        <a href="..">Home</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../getting_started/">Getting Started</a>
+    <a href="..">Overview</a>
 </li>
 
                         
@@ -213,6 +207,9 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#change-log">Change Log</a></li>
+            <li class="second-level"><a href="#version-12">Version 1.2</a></li>
+                
+                <li class="third-level"><a href="#version-120">Version 1.2.0</a></li>
             <li class="second-level"><a href="#version-11x">Version 1.1.x</a></li>
                 
                 <li class="third-level"><a href="#version-112">Version 1.1.2</a></li>
@@ -230,6 +227,21 @@
         <div class="col-md-9" role="main">
 
 <h1 id="change-log">Change Log<a class="headerlink" href="#change-log" title="Permanent link"> # </a></h1>
+<h2 id="version-12">Version 1.2<a class="headerlink" href="#version-12" title="Permanent link"> # </a></h2>
+<h3 id="version-120">Version 1.2.0<a class="headerlink" href="#version-120" title="Permanent link"> # </a></h3>
+<p>This version includes a number of new features and documentation updates.</p>
+<ul>
+<li>A new <a href="https://mitodl.github.io/mitx-grading-library/">documentation website</a></li>
+<li>Math parser now supports multivariable functions and array input (vector, matrix, etc).</li>
+<li>Improvements to balanced bracket validator.</li>
+<li>Added new class <code>MatrixGrader</code> (see <a href="../grading_math/matrix_grader/matrix_grader/">MatrixGrader documentation</a>) along with supporting sampling classes <code>RealMatrices</code> and <code>RealVectors</code></li>
+<li>When <code>FormulaGrader</code> (and its subclasses) are used inside an ordered <code>ListGrader</code>, authors can now grade multiple student inputs in comparison to each other by specifying answers in terms of <a href="../grading_math/formula_grader.md/#sibling-variables">sibling variables</a></li>
+<li><code>FormulaGrader</code> (and its subclasses) now support <a href="../grading_math/comparer_functions/">comparer functions</a> that can be used to grade student input more flexibly. For example, rather than checking checking that the student input and author input are equal, check that they are equal modulo a certain number. Builtin comparers:
+  <strong> equality_comparer
+  </strong> congruence_comparer
+  <strong> between_comparer
+  </strong> eigenvector_comparer</li>
+</ul>
 <h2 id="version-11x">Version 1.1.x<a class="headerlink" href="#version-11x" title="Permanent link"> # </a></h2>
 <h3 id="version-112">Version 1.1.2<a class="headerlink" href="#version-112" title="Permanent link"> # </a></h3>
 <ul>
