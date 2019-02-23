@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="../matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -185,7 +197,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="next" href="../../string_grader/">
+                        <a rel="next" href="../../edx/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -216,6 +228,7 @@
             <li class="second-level"><a href="#functions">Functions</a></li>
                 
                 <li class="third-level"><a href="#user-functions">User Functions</a></li>
+                <li class="third-level"><a href="#choosing-a-function-randomly">Choosing a function randomly</a></li>
             <li class="second-level"><a href="#constants">Constants</a></li>
                 
             <li class="second-level"><a href="#overriding-default-functions-and-constants">Overriding Default Functions and Constants</a></li>
@@ -249,7 +262,7 @@
 </ul>
 </div>
 <h2 id="variables-and-sampling">Variables and Sampling<a class="headerlink" href="#variables-and-sampling" title="Permanent link"> # </a></h2>
-<p>FormulaGrader grades a formula by numerical sampling. That is, random values are  assigned to each of the unknown variables and unknown functions, then the numerical value of the student's input expression and author's answer are calculated. The sampling process is repeated, and if the student answer and author answer compare within the desired tolerance enough times, the student input is graded as correct.</p>
+<p>FormulaGrader grades a formula by numerical sampling. That is, random values are assigned to each of the unknown variables and unknown functions, then the numerical value of the student's input expression and author's answer are calculated. The sampling process is repeated, and if the student answer and author answer compare within the desired tolerance enough times, the student input is graded as correct.</p>
 <p>Variables are configured by including a list of strings of each variable name as follows.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;1+x^2+y&#39;</span><span class="p">,</span>
@@ -258,8 +271,8 @@
 </pre></div>
 
 
-<p>Note that the <code>answers</code> parameter follows all of the usual allowances from ItemGrader.</p>
-<p>The variables need to have numbers randomly assigned to them. Each is sampled from a <a href="../sampling/">sampling set</a>, which is RealInterval() by default (random numbers from 1 to 5). A variety of different sampling sets are available, including random complex numbers. To specify the sampling set to use for a variable, use the <code>sample_from</code> key.</p>
+<p>Note that the <code>answers</code> parameter follows all of the usual allowances from <code>ItemGrader</code>.</p>
+<p>The variables need to have numbers randomly assigned to them. Each is sampled from a <a href="../sampling/">sampling set</a>, which is <code>RealInterval()</code> by default (random numbers from 1 to 5). A variety of different sampling sets are available, including random complex numbers. To specify the sampling set to use for a variable, use the <code>sample_from</code> key.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;1+x^2+y+z/2&#39;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
@@ -310,7 +323,7 @@
 
 
 <h2 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link"> # </a></h2>
-<p>By default, a large array of mathematical functions are available for use. See the full list <a href="../functions/">here</a>. Note that functions for manipulating complex variables are available, which allows you to grade complex expressions. In the following example, <code>z*z</code> is recognized to be different from <code>abs(z)^2</code>.</p>
+<p>By default, a large array of mathematical functions are available for use. See the full list <a href="../functions/">here</a>. Note that all functions are capable of handling complex expressions. In the following example, <code>z*z</code> is recognized to be different from <code>abs(z)^2</code>.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;abs(z)^2&#39;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">],</span>
@@ -331,7 +344,7 @@
 </pre></div>
 
 
-<p>This defines a function <code>f(x) = x^2</code>. User-defined function names must start with a letter, and can use numbers and underscores, such as <code>my_func2</code>. They are also allowed to have apostrophes (primes) at the end of the name, such as to indicate derivatives. Eg, <code>f''</code>. Be careful about using quotation marks appropriately when using primes in function names!</p>
+<p>This defines a function <code>f(x) = x^2</code> that students may use. User-defined function names must start with a letter, and can use numbers and underscores, such as <code>my_func2</code>. They are also allowed to have apostrophes (primes) at the end of the name, such as to indicate derivatives. Eg, <code>f''</code>. Be careful about using quotation marks appropriately when using primes in function names, as in the following example.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s2">&quot;f&#39;&#39;(x)&quot;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
@@ -340,8 +353,10 @@
 </pre></div>
 
 
+<h3 id="choosing-a-function-randomly">Choosing a function randomly<a class="headerlink" href="#choosing-a-function-randomly" title="Permanent link"> # </a></h3>
 <p>You can also specify random functions by specifying a sampling set for a function. You can provide a list of functions to randomly choose from as follows.</p>
-<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s2">&quot;f(x)&quot;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
     <span class="n">user_functions</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">]}</span>
@@ -350,7 +365,7 @@
 
 
 <p>Each time this formula is checked, the function <code>f</code> will be sampled from the list of available functions.</p>
-<p>You can also specify a random well-behaved function by using the RandomFunction() sampling set.</p>
+<p>You can also specify a random well-behaved function by using the <code>RandomFunction()</code> sampling set.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s2">&quot;f&#39;&#39;(x) + omega^2*f(x)&quot;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;omega&#39;</span><span class="p">],</span>
@@ -377,7 +392,7 @@
 
 <p>Constants are like variables that only ever have one value.</p>
 <h2 id="overriding-default-functions-and-constants">Overriding Default Functions and Constants<a class="headerlink" href="#overriding-default-functions-and-constants" title="Permanent link"> # </a></h2>
-<p>You can override default functions and constants if you really want, although this is discouraged and requires suppressing warnings with <code>suppress_warnings=True</code>. The grader</p>
+<p>You can override default functions and constants if you really want, although this is discouraged and requires suppressing warnings with <code>suppress_warnings=True</code>. The following grader</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;x^2&#39;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
@@ -405,11 +420,12 @@
 </pre></div>
 
 
-<p>If a student tries to use one of these strings, then they receive the <code>forbidden_message</code>, without giving away what the forbidden string is. We recommend using this sparingly, as students will find it confusing. The default <code>forbidden_message</code> is "Invalid Input: This particular answer is forbidden".</p>
+<p>If a student tries to use one of these strings, then they receive the <code>forbidden_message</code>, without giving away what the forbidden string is. We recommend using this sparingly, as students may find it confusing. The default <code>forbidden_message</code> is "Invalid Input: This particular answer is forbidden".</p>
 <p>Forbidden strings and student answers are stripped of whitespace before being compared. Thus, if <code>x + y</code> is forbidden, then answers containing <code>x+y</code> or <code>x   +   y</code> will be rejected.</p>
 <h3 id="blacklists-and-whitelists">Blacklists and Whitelists<a class="headerlink" href="#blacklists-and-whitelists" title="Permanent link"> # </a></h3>
 <p>You can disallow specific functions by adding them to the blacklist of functions as a list of disallowed function names. In the following example, <code>sin</code> is disallowed in correct answers.</p>
-<div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;sqrt(1 - cos(x)^2)&#39;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
     <span class="n">sample_from</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]},</span>
@@ -431,7 +447,7 @@
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;pi/2-x&#39;</span><span class="p">,</span>
     <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
-    <span class="n">whitelist</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="c1"># no functions are allowed</span>
+    <span class="n">whitelist</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>  <span class="c1"># no functions are allowed</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -458,19 +474,29 @@
 
 
 <p>Tolerances are necessary because of numerical roundoff error that lead to small differences in evaluations of algebraically equivalent expressions. Zero tolerance should be used sparingly, perhaps only with integer sampling and answers.</p>
+<p>Note that if the answer is exactly <code>0</code> (or can be sampled to be exactly <code>0</code>, such as when using integer sampling), percentage tolerances don't work (as any percentage of zero is still zero). This means that the student-supplied answer must also evaluate to exactly zero to be graded correctly. Note that answers like <code>cos(pi/2)</code> evaluate to approximately <code>10^(-16)</code> due to numerical roundoff error. If you want such answers to be graded correctly, make sure to use an absolute tolerance instead of a relative tolerance on such questions.</p>
 <h2 id="suffixes">Suffixes<a class="headerlink" href="#suffixes" title="Permanent link"> # </a></h2>
-<p>Numbers with a % at the end will be treated as percentages, and converted to the appropriate decimals.</p>
-<p>edX also defines a number of metric suffixes (k, M, G, T, m, u, n, and p) that modify a number appropriately. However, in our experience, these metric suffixes lead to more confusion than use. For example, <code>2M</code>, which one would expect should be rejected as an error when <code>2*M</code> was intended, is accepted by edX, interpreted as <code>2*10^6</code>, marked incorrect, and eats a student's attempt. Similarly for all of the other metric suffixes.</p>
-<p>We have therefore made the decision to disable metric suffixes by default. If you want to enable them, you can do so using the following.</p>
+<p>Numbers with a % at the end will be treated as percentages, and converted to the appropriate decimals. If you desire, you can also enable the use of metric suffixes by setting the appropriate setting as follows.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FormulaGrader</span><span class="p">(</span>
-    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;2*m&#39;</span><span class="p">,</span>
-    <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">],</span>
+    <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;2m*a&#39;</span><span class="p">,</span>  <span class="c1"># Equivalent to &#39;0.002*a&#39;</span>
+    <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span>
     <span class="n">metric_suffixes</span><span class="o">=</span><span class="bp">True</span>
 <span class="p">)</span>
 </pre></div>
 
 
-<p>We strongly recommend <em>not</em> doing this when using the following variable names: k, M, G, T, m, u, n, and p.</p>
+<p>The included suffixes are:</p>
+<ul>
+<li><code>k</code>: 1e3</li>
+<li><code>M</code>: 1e6</li>
+<li><code>G</code>: 1e9</li>
+<li><code>T</code>: 1e12</li>
+<li><code>m</code>: 1e-3</li>
+<li><code>u</code>: 1e-6</li>
+<li><code>n</code>: 1e-9</li>
+<li><code>p</code>: 1e-12</li>
+</ul>
+<p>We strongly recommend <em>not</em> combining these suffixes with the variables names <code>k</code>, <code>M</code>, <code>G</code>, <code>T</code>, <code>m</code>, <code>u</code>, <code>n</code> or <code>p</code>, as <code>2m</code> and <code>2*m</code> will then represent two very different things, which can lead to much student confusion.</p>
 <h2 id="sibling-variables">Sibling Variables<a class="headerlink" href="#sibling-variables" title="Permanent link"> # </a></h2>
 <p>When a student submits several mathematical expressions as part of one problem, it is sometimes useful to grade these inputs in comparison to each other. This can be done using <em>sibling variables</em>, which are available when <code>FormulaGrader</code> is used as a subgrader in <strong>ordered</strong> <code>ListGrader</code> problems.</p>
 <p>For example:</p>
@@ -488,7 +514,7 @@
 </pre></div>
 
 
-<p>Note that in this example, the sequence of inputs <code>['2*x', 4*x^2, 16*x^4]</code> is correct, and so is <code>['3*x', 9*x^2, 81*x^4]</code>, but <code>['3*x', 4*x^2, 16*x^4]</code> receives only two-third credit.</p>
+<p>Note that in this example, the sequence of inputs <code>['2*x', 4*x^2, 16*x^4]</code> is correct, and so is <code>['3*x', 9*x^2, 81*x^4]</code>, but <code>['3*x', 4*x^2, 16*x^4]</code> receives only two-thirds credit (from the first entry matching a given answer, and the last entry being the square of the second entry).</p>
 <div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">student_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2*x&#39;</span><span class="p">,</span><span class="s1">&#39;4*x^2&#39;</span><span class="p">,</span> <span class="s1">&#39;16*x^4&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result1</span><span class="p">,</span> <span class="n">result2</span><span class="p">,</span> <span class="n">result3</span> <span class="o">=</span> <span class="n">grader</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">student_inputs</span><span class="p">)[</span><span class="s1">&#39;input_list&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result1</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">],</span> <span class="n">result2</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">],</span> <span class="n">result3</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]</span>
@@ -506,7 +532,7 @@
 </pre></div>
 
 
-<p>Other things:</p>
+<p>Notes:</p>
 <ul>
 <li>Sibling variables are available to <code>FormulaGrader</code>, <code>NumericalGrader</code>, and <code>MatrixGrader</code>, but only in <strong>ordered</strong> <code>ListGrader</code> problems.</li>
 <li>The jth student input is referenced as <code>sibling_j</code>. (Exception: If nesting <code>ListGraders</code> with grouping, <code>sibling_j</code> refers to the jth member of any particular group.)</li>

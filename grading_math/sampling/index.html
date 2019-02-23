@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="../matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -185,7 +197,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="next" href="../matrix_grader/matrix_grader/">
+                        <a rel="next" href="../matrixfunctions/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
@@ -233,10 +245,10 @@
 
 <h1 id="sampling">Sampling<a class="headerlink" href="#sampling" title="Permanent link"> # </a></h1>
 <p>Whenever random variables/functions are involved, they need to be sampled from an appropriate distribution. In this library, distributions are defined in classes that are called <em>sampling sets</em>. We have defined a number of sampling sets for various common situations, but you can also create your own by using plugins.</p>
-<p>These sampling classes are available for use in FormulaGrader.</p>
+<p>These sampling classes are available for use in <code>FormulaGrader</code>, <code>MatrixGrader</code>, etc.</p>
 <h2 id="variable-names">Variable Names<a class="headerlink" href="#variable-names" title="Permanent link"> # </a></h2>
 <p>Variable names must start with a letter, and can continue with letters, numbers, and underscores. Variable names may conclude with an arbitrary number of apostrophes. The same naming conventions apply to user-defined constants.</p>
-<p>It is also possible to have tensor variable names. The following three forms are available:</p>
+<p>It is also possible to have "tensor" variable names. The following three forms are available:</p>
 <ul>
 <li><code>T^{ijk}</code></li>
 <li><code>T_{ijk}</code></li>
@@ -254,6 +266,8 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealInterval</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="c1"># The default is [1, 5]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">RealInterval</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># A list can also be used to specify an interval</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
 </pre></div>
 
 
@@ -308,6 +322,7 @@
 </pre></div>
 
 
+<p>If you want to sample a matrix in a way that depends on a scalar, see <code>DependentSampler</code> below.</p>
 <h2 id="variable-sampling-generic">Variable Sampling: Generic<a class="headerlink" href="#variable-sampling-generic" title="Permanent link"> # </a></h2>
 <h3 id="discreteset">DiscreteSet<a class="headerlink" href="#discreteset" title="Permanent link"> # </a></h3>
 <p>Sample from a discrete set of values, specified in a tuple. A single value may also be provided, but this case should usually be specified as a constant instead of as a sampling set.</p>
@@ -315,6 +330,8 @@
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DiscreteSet</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="c1"># Always select 3.5</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DiscreteSet</span><span class="p">(</span><span class="mf">3.5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># A tuple can also be used to specify a discrete set</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 </pre></div>
 
 
@@ -322,6 +339,8 @@
 <p>Compute a value for a variable based on the values of other variables. The sampler must be initialized with a list of variables that it depends on, as well as the formula used to perform the computation. The formula can use any base functions, but no user-defined functions. DependentSamplers can depend on other dependent variables. If you construct a self-referential chain, an error will occur.</p>
 <div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Set radius based on the random values of x, y and z</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DependentSampler</span><span class="p">(</span><span class="n">depends</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;sqrt(x^2+y^2+z^2)&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Construct a matrix that depends on a variable</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">sampler</span> <span class="o">=</span> <span class="n">DependentSampler</span><span class="p">(</span><span class="n">depends</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;[[x,0],[0,-x^2]]&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -352,8 +371,13 @@
 
 
 <p>You can also generate a non-unary function by specifying the input dimension, and generate vector output by specifying the output dimension.</p>
-<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate a function that takes in two values and outputs a 3D vector</span>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="c1"># Generate a function that takes in two scalar values and outputs a 3D vector</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Finally, if you want to generate a complex random function, simply set <code>complex=True</code>. In this situation, the randomly generated function works as previously, but the sinusoid coefficients are complex numbers.</p>
+<div class="codehilite"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">functionsampler</span> <span class="o">=</span> <span class="n">RandomFunction</span><span class="p">(</span><span class="nb">complex</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div></div>
         
     </div>

@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="../grading_math/matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../grading_math/matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -209,6 +221,8 @@
         <li class="first-level active"><a href="#change-log">Change Log</a></li>
             <li class="second-level"><a href="#version-12">Version 1.2</a></li>
                 
+                <li class="third-level"><a href="#version-122">Version 1.2.2</a></li>
+                <li class="third-level"><a href="#version-121">Version 1.2.1</a></li>
                 <li class="third-level"><a href="#version-120">Version 1.2.0</a></li>
             <li class="second-level"><a href="#version-11x">Version 1.1.x</a></li>
                 
@@ -228,19 +242,34 @@
 
 <h1 id="change-log">Change Log<a class="headerlink" href="#change-log" title="Permanent link"> # </a></h1>
 <h2 id="version-12">Version 1.2<a class="headerlink" href="#version-12" title="Permanent link"> # </a></h2>
+<h3 id="version-122">Version 1.2.2<a class="headerlink" href="#version-122" title="Permanent link"> # </a></h3>
+<ul>
+<li>Added <code>accept_any</code> and <code>accept_nonempty</code> options to <code>StringGrader</code>.</li>
+<li>If only a single text input is present, the <code>answers</code> key is inferred from the <code>expect</code> attribute of the <code>customresponse</code> tag (does not work for <code>SingleListInput</code> however).</li>
+<li>Updated AsciiMath preprocessor to handle variable names and user-defined functions properly.</li>
+<li>Various small bug fixes.</li>
+</ul>
+<h3 id="version-121">Version 1.2.1<a class="headerlink" href="#version-121" title="Permanent link"> # </a></h3>
+<ul>
+<li>Added <code>arctan2(x, y)</code> function that returns angle between +x axis and the point (x, y); available by default for students to use in FormulaGrader problems.</li>
+<li>Rewrote the expression parser and evaluator. Among other things, new parser provides better error messages when explicit multiplication is forgotten in expressions like <code>'5x + 3'</code>. Also validates curly brace balancing, which may be used in tensor variable names.</li>
+</ul>
 <h3 id="version-120">Version 1.2.0<a class="headerlink" href="#version-120" title="Permanent link"> # </a></h3>
 <p>This version includes a number of new features and documentation updates.</p>
 <ul>
 <li>A new <a href="https://mitodl.github.io/mitx-grading-library/">documentation website</a></li>
 <li>Math parser now supports multivariable functions and array input (vector, matrix, etc).</li>
+<li>Many improvements to our mathjax preprocessor</li>
 <li>Improvements to balanced bracket validator.</li>
 <li>Added new class <code>MatrixGrader</code> (see <a href="../grading_math/matrix_grader/matrix_grader/">MatrixGrader documentation</a>) along with supporting sampling classes <code>RealMatrices</code> and <code>RealVectors</code></li>
 <li>When <code>FormulaGrader</code> (and its subclasses) are used inside an ordered <code>ListGrader</code>, authors can now grade multiple student inputs in comparison to each other by specifying answers in terms of <a href="../grading_math/formula_grader.md/#sibling-variables">sibling variables</a></li>
-<li><code>FormulaGrader</code> (and its subclasses) now support <a href="../grading_math/comparer_functions/">comparer functions</a> that can be used to grade student input more flexibly. For example, rather than checking checking that the student input and author input are equal, check that they are equal modulo a certain number. Builtin comparers:
-  <strong> equality_comparer
-  </strong> congruence_comparer
-  <strong> between_comparer
-  </strong> eigenvector_comparer</li>
+<li><code>FormulaGrader</code> (and its subclasses) now support <a href="../grading_math/comparer_functions/">comparer functions</a> that can be used to grade student input more flexibly. For example, rather than checking checking that the student input and author input are equal, check that they are equal modulo a certain number. Built-in comparers:<ul>
+<li>equality_comparer</li>
+<li>congruence_comparer</li>
+<li>between_comparer</li>
+<li>eigenvector_comparer</li>
+</ul>
+</li>
 </ul>
 <h2 id="version-11x">Version 1.1.x<a class="headerlink" href="#version-11x" title="Permanent link"> # </a></h2>
 <h3 id="version-112">Version 1.1.2<a class="headerlink" href="#version-112" title="Permanent link"> # </a></h3>

@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="grading_math/matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="grading_math/matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -207,6 +219,8 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="first-level active"><a href="#mitx-grading-library-an-overview">MITx Grading Library: An Overview</a></li>
+            <li class="second-level"><a href="#relevant-links">Relevant Links</a></li>
+                
             <li class="second-level"><a href="#why-use-mitxgraders">Why use MITxGraders</a></li>
                 
             <li class="second-level"><a href="#two-typical-examples">Two Typical Examples</a></li>
@@ -227,17 +241,24 @@
 
 <h1 id="mitx-grading-library-an-overview">MITx Grading Library: An Overview<a class="headerlink" href="#mitx-grading-library-an-overview" title="Permanent link"> # </a></h1>
 <p>The <code>mitxgraders</code> Python library provides a number of configurable Python classes that can be used as graders in edX custom response problems.</p>
+<h2 id="relevant-links">Relevant Links<a class="headerlink" href="#relevant-links" title="Permanent link"> # </a></h2>
+<ul>
+<li>A <a href="https://edge.edx.org/courses/course-v1:MITx+grading-library+examples/">complete example course</a> that demonstrates most of the features of this library is available on edX edge</li>
+<li><a href="https://github.com/mitodl/mitx-grading-library">Complete source code</a> for the library and the aforementioned example course is available on github</li>
+</ul>
 <h2 id="why-use-mitxgraders">Why use MITxGraders<a class="headerlink" href="#why-use-mitxgraders" title="Permanent link"> # </a></h2>
 <p>Use MITxGraders because it:</p>
 <ul>
-<li>is reliable (extensively tested)</li>
+<li>has many capabilities beyond the standard edX options</li>
 <li>is highly configuration but with <em>sensible defaults</em></li>
 <li>provides useful error messages<ul>
-<li>to students (when submitting answers&mdash; for example, formula parsing errors)</li>
+<li>to students (when submitting answers &mdash; for example, formula parsing errors)</li>
 <li>to problem authors (when configuring a grader)</li>
 </ul>
 </li>
+<li>is reliable (extensively tested)</li>
 <li>is open source (BSD-3 license, <a href="https://github.com/mitodl/mitx-grading-library">our Github repo</a>)</li>
+<li>has an <a href="https://edge.edx.org/courses/course-v1:MITx+grading-library+examples/">excellent example edX course</a></li>
 </ul>
 <h2 id="two-typical-examples">Two Typical Examples<a class="headerlink" href="#two-typical-examples" title="Permanent link"> # </a></h2>
 <p>Typical usage in an edX course looks like:</p>
@@ -246,7 +267,6 @@
 <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;loncapa/python&quot;</span><span class="nt">&gt;</span>
 from mitxgraders import FormulaGrader, RandomFunction
 grader = FormulaGrader(
-    answers=&quot;e^(f(x)) * f&#39;(x^2) * 2*x&quot;,
     variables=[&quot;x&quot;],
     # allows students to use generic functions f and f&#39; in their input
     user_functions={ &quot;f&quot;: RandomFunction(), &quot;f&#39;&quot;:RandomFunction() }
@@ -254,17 +274,16 @@ grader = FormulaGrader(
 <span class="nt">&lt;/script&gt;</span>
 
   <span class="nt">&lt;p&gt;</span>Enter the derivative of \(g(x) = e^{f(x^2)} \).<span class="nt">&lt;/p&gt;</span>
-  <span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- correct_answer is shown to student when they press [Show Answer]</span>
-<span class="c">         its value is not used for grading purposes --&gt;</span>
-    <span class="nt">&lt;textline</span> <span class="na">math=</span><span class="s">&quot;true&quot;</span> <span class="na">correct_answer=</span><span class="s">&quot;e^(f(x)) * f&#39;(x^2) * 2*x&quot;</span> <span class="nt">/&gt;</span>
+  <span class="c">&lt;!-- answer is provided to the grader when using single inputs --&gt;</span>
+  <span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span> <span class="na">answer=</span><span class="s">&quot;e^(f(x)) * f&#39;(x^2) * 2*x&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;textline</span> <span class="na">math=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;/customresponse&gt;</span>
 
 <span class="nt">&lt;/problem&gt;</span>
 </pre></div>
 
 
-<p>The resulting problem would be similar to an edX <code>&lt;formularesponse /&gt;</code> problem, but allows students to use an addition generic functions <code>f(x)</code> and <code>f'(x)</code> in their submissions.</p>
+<p>The resulting problem would be similar to an edX <code>&lt;formularesponse /&gt;</code> problem, but allows students to use additional generic functions <code>f(x)</code> and <code>f'(x)</code> in their submissions.</p>
 <p>The next example grader would grade an unordered list of mathematical expressions.</p>
 <div class="codehilite"><pre><span></span><span class="nt">&lt;problem&gt;</span>
 <span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;loncapa/python&quot;</span><span class="nt">&gt;</span>
@@ -278,8 +297,8 @@ grader = FormulaGrader(
 
   <span class="nt">&lt;p&gt;</span>What are the linear factors of \((x^2 - 4)\)?<span class="nt">&lt;/p&gt;</span>
   <span class="nt">&lt;customresponse</span> <span class="na">cfn=</span><span class="s">&quot;grader&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- correct_answer is shown to student when they press [Show Answer]</span>
-<span class="c">         its value is not used for grading purposes --&gt;</span>
+    <span class="c">&lt;!-- correct_answer is shown to student when they press [Show Answer].</span>
+<span class="c">         Its value is not used for grading purposes --&gt;</span>
     <span class="nt">&lt;textline</span> <span class="na">math=</span><span class="s">&quot;true&quot;</span> <span class="na">correct_answer=</span><span class="s">&quot;x - 2&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;textline</span> <span class="na">math=</span><span class="s">&quot;true&quot;</span> <span class="na">correct_answer=</span><span class="s">&quot;x + 2&quot;</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;/customresponse&gt;</span>
@@ -289,32 +308,32 @@ grader = FormulaGrader(
 
 
 <h2 id="loading-in-edx">Loading in edX<a class="headerlink" href="#loading-in-edx" title="Permanent link"> # </a></h2>
-<p>Download <a href="./python_lib.zip">python_lib.zip</a> and place it in your static folder (XML workflow) or upload it as a file asset (Studio workflow). If you already have a python_lib.zip, you'll need to merge ours with yours and re-zip. If you want to use our AsciiMath renderer definitions, place the <a href="./MjxPrep.js">MjxPrep.js</a> file in your static folder (XML) or upload the file to your course (Studio).</p>
+<p>Download <a href="./python_lib.zip">python_lib.zip</a> and place it in your static folder (XML workflow) or upload it as a file asset (Studio workflow). If you already have a python_lib.zip, you'll need to merge ours with yours and re-zip. If you want to use our AsciiMath renderer definitions, place the <a href="./MjxPrep.js">MjxPrep.js</a> file in your static folder (XML) or upload the file to your course assets (Studio).</p>
 <p>The basic idea of this library is that it contains a number of classes that can be used as the check function for an edX custom response problem. Different classes of grader are used for different inputs. We begin by presenting a brief overview on how the grading classes are used in general.</p>
 <h2 id="grading-classes">Grading Classes<a class="headerlink" href="#grading-classes" title="Permanent link"> # </a></h2>
 <p>Grading classes generally fall into two categories: single-input graders and multi-input graders.</p>
 <p><strong>Single-input graders</strong> grade a single input. All single-input graders are built on a framework we call an <code>ItemGrader</code>. We recommend understanding how <code>ItemGrader</code>s work before diving into more specifics.</p>
 <ul>
 <li><a href="item_grader/">ItemGrader</a><ul>
-<li><a href="string_grader/">StringGrader</a> for grading simple strings</li>
+<li><a href="string_grader/">StringGrader</a> for grading simple strings of text</li>
 <li><a href="grading_math/formula_grader/">FormulaGrader</a> for grading scalar formulas</li>
 <li><a href="grading_math/numerical_grader/">NumericalGrader</a> for grading numbers</li>
-<li><a href="grading_math/matrix_grader/matrix_grader/">MatrixGrader</a> for grading formulas with scalars, vectors, and matrices</li>
-<li><a href="grading_lists/single_list_grader/">SingleListGrader</a> for grading a delimiter-separated (default: comma-separated) list of inputs in a single response box.</li>
+<li><a href="grading_math/matrix_grader/matrix_grader/">MatrixGrader</a> for grading formulas with vectors and matrices</li>
+<li><a href="grading_lists/single_list_grader/">SingleListGrader</a> for grading a delimiter-separated (default: comma-separated) list of inputs in a single response box</li>
 </ul>
 </li>
 </ul>
-<p><strong>Multi-input graders</strong> are for grading multiple input boxes at once. that are just composed of single-input graders working in concert can be handled by the general ListGrader class. At this stage, ListGrader is the only multi-input grader included in the library, although plugins can be used to construct further examples.</p>
+<p><strong>Multi-input graders</strong> are for grading multiple input boxes at once. They are composed of single-input graders working in concert, handled by the general <code>ListGrader</code> class. At this stage, <code>ListGrader</code> is the only multi-input grader included in the library, although plugins can be used to construct further examples.</p>
 <ul>
 <li><a href="grading_lists/list_grader/">ListGrader</a> for grading a list of inputs. Examples:<ul>
-<li>grade an ordered list of strings using</li>
+<li>grade an ordered list of strings</li>
 <li>grade an unordered list of mathematical expressions</li>
 <li>grade a list of eigenvalue-eigenvector pairs</li>
 </ul>
 </li>
 </ul>
 <h2 id="using-grading-classes">Using Grading Classes<a class="headerlink" href="#using-grading-classes" title="Permanent link"> # </a></h2>
-<p>All grading classes are instantiated by calling them. Options can be provided using keyword arguments</p>
+<p>All grading classes are instantiated by calling them. Options can be provided using keyword arguments as</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">FakeGradingClass</span><span class="p">(</span><span class="n">option_1</span><span class="o">=</span><span class="n">value_1</span><span class="p">,</span> <span class="n">option_2</span><span class="o">=</span><span class="n">value2</span><span class="p">)</span>
 <span class="c1"># FakeGradingClass is not real! It&#39;s just a placeholder</span>
 </pre></div>
@@ -326,17 +345,17 @@ grader = FormulaGrader(
 </pre></div>
 
 
-<p>Passing the configuration as a dictionary can be useful if you are using the same configuration for multiple problems. However, 'mix and match' these two options: if a configuration dictionary is supplied, any keyword arguments are ignored.</p>
+<p>Passing the configuration as a dictionary can be useful if you are using the same configuration for multiple problems. However, you cannot 'mix and match' these two options: if a configuration dictionary is supplied, any keyword arguments are ignored.</p>
 <p>Most configuration options are specific to their grading classes. For example, <code>FormulaGrader</code> has a <code>variables</code> configuration key, but <code>NumericalGrader</code> does not.</p>
 <p>A few configuration options are accessible to all grading classes.</p>
 <h3 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link"> # </a></h3>
-<p>Every grading class also has a debug option. By default, <code>debug=False</code>. To receive debug information from a given grader, specify <code>debug=True</code>. Some graders will provide more debug information than others.</p>
+<p>Every grading class has a debug option. By default, <code>debug=False</code>. To receive debug information from a given grader, specify <code>debug=True</code>. Some graders will provide more debug information than others. Debug information can be used by authors to check to make sure that the graders are behaving as expected, but shouldn't be made available to students.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">GradingClass</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 
 <h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link"> # </a></h3>
-<p>Every grading class also has a <code>suppress_warnings</code> key.</p>
+<p>Every grading class has a <code>suppress_warnings</code> key.</p>
 <p>The options passed to a grading class undergo extensive validation and graders will throw errors if instantiated with invalid options.</p>
 <p>A few error messages serve only as warnings. For example, if you attempt to configure a <code>FormulaGrader</code> with <code>pi</code> as a variable, you will receive a warning:</p>
 <div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mitxgraders</span> <span class="kn">import</span> <span class="n">FormulaGrader</span>
@@ -348,7 +367,7 @@ grader = FormulaGrader(
 
 <p>As the warning message says, if you really want to override the default value of <code>'pi'</code> (not recommended!) then you can suppress this warning by setting <code>suppress_warnings=True</code>.</p>
 <h2 id="plugins">Plugins<a class="headerlink" href="#plugins" title="Permanent link"> # </a></h2>
-<p>Any .py file stored in the <code>plugins</code> folder will be automatically loaded. All variables in the <strong>all</strong> list will be made available when doing <code>from mitxgraders import *</code>. See <code>template.py</code> for an example.</p>
+<p>Any <code>.py</code> file stored in the <code>plugins</code> folder will be automatically loaded. All variables in the <code>__all__</code> list will be made available when doing <code>from mitxgraders import *</code>. See <code>template.py</code> for an example.</p>
 <p>You can define custom grading classes in your plugin. To learn how this works, we recommend copying the code from <code>stringgrader.py</code>, renaming the class, and building a simple plugin based on <code>StringGrader</code>.</p>
 <p>We are happy to include user-contributed plugins in the repository for this library. If you have built a plugin that you would like to see combined into this library, please contact the authors through <a href="https://github.com/mitodl/mitx-grading-library">github</a>. We are also willing to consider incorporating good plugins into the library itself.</p></div>
         
@@ -405,5 +424,5 @@ grader = FormulaGrader(
 
 <!--
 MkDocs version : 0.17.5
-Build Date UTC : 2018-08-08 19:03:51
+Build Date UTC : 2019-02-23 21:27:31
 -->

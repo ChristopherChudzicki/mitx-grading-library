@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="../grading_math/matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../grading_math/matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -214,7 +226,7 @@
         <div class="col-md-9" role="main">
 
 <h1 id="itemgrader">ItemGrader<a class="headerlink" href="#itemgrader" title="Permanent link"> # </a></h1>
-<p>When an individual input needs to be graded, it is graded by an item grader. All item graders work by specifying answers and their corresponding points/messages, as well as an optional message for wrong answers. In these examples, we use <code>StringGrader</code> as an example of how to use a generic ItemGrader. You cannot use a generic ItemGrader by itself.</p>
+<p>When an individual input needs to be graded, it is graded by an item grader. All item graders work by specifying answers and their corresponding points/messages, as well as an optional message for wrong answers. In these examples, we use <code>StringGrader</code> as an example of how to use a generic ItemGrader. You cannot use a generic <code>ItemGrader</code> by itself.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>
     <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
@@ -222,10 +234,18 @@
 </pre></div>
 
 
-<p>The <code>answers</code> can be used to specify correct answers, specific feedback messages, and to assign partial credit. The <code>answers</code> key accepts a few formats:</p>
-<ol>
-<li>A single dictionary can be used to specify an answer, feedback, correctness, and partial credit:</li>
-</ol>
+<p>The <code>answers</code> key can be used to specify correct answers, specific feedback messages, and to assign partial credit. It accepts a few formats:</p>
+<ul>
+<li>
+<p>A single dictionary can be used to specify an answer, feedback, correctness, and partial credit. The dictionary keys are:</p>
+<ul>
+<li><code>'expect'</code> (required): compared against student answer. Most ItemGraders use strings to specify the <code>'expect'</code> value.</li>
+<li><code>'grade_decimal'</code> (optional, a number between <code>0</code> and <code>1</code>): The credit associated with this answer; default value is <code>1</code>.</li>
+<li><code>'ok'</code> (optional, <code>True</code>, <code>False</code>, or <code>'partial'</code>): The answer's correctness; determines icon used by edX. The default value is inferred from <code>grade_decimal</code>.</li>
+<li><code>'msg'</code> (optional, string): A feedback message associated with this answer.</li>
+</ul>
+</li>
+</ul>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;expect&#39;</span><span class="p">:</span> <span class="s1">&#39;zebra&#39;</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s1">&#39;grade_decimal&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s1">&#39;Yay!&#39;</span><span class="p">},</span>
     <span class="n">wrong_msg</span><span class="o">=</span><span class="s1">&#39;Try again!&#39;</span>
@@ -233,14 +253,9 @@
 </pre></div>
 
 
-<p>The answers dictionary keys are:
-  - <code>'expect'</code> (required): compared against student answer. Most ItemGraders use strings to specify the <code>'expect'</code> value.
-  - <code>'grade_decimal'</code> (a number between <code>0</code> and <code>1</code>): The partial credit associated with this answer; default value is <code>1</code>.
-  - <code>'ok'</code> (<code>True</code>, <code>False</code>, or <code>'partial'</code>): The answer's correctness; determines icon used by edX. The default value is inferred from <code>grade_decimal</code>.
-  - <code>'msg'</code> (string): A feedback message associated with this answer.</p>
-<ol>
+<ul>
 <li>A single <code>'expect'</code> value: can be used to specify the correct answer. For example,</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>
     <span class="c1"># Equivalent to:</span>
@@ -251,9 +266,9 @@
 
 
 <p>Again, most ItemGraders use strings to store <code>'expect'</code> values.</p>
-<ol>
+<ul>
 <li>A tuple of dictionaries or strings:</li>
-</ol>
+</ul>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">StringGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="p">(</span>
         <span class="c1"># the correct answer</span>
@@ -270,13 +285,14 @@
 </pre></div>
 
 
-<p>Internally, the ItemGrader converts the answers entry into a tuple of dictionaries. When grading, it asks the specific grading class to grade the response against each possible answer, and selects the best outcome for the student.</p>
-<p>The <code>wrong_msg</code> is only displayed if the score is zero, and there are no other messages.</p>
+<p>Internally, the <code>ItemGrader</code> converts the answers entry into a tuple of dictionaries. When grading, it asks the specific grading class to grade the response against each possible answer, and selects the best outcome for the student.</p>
+<p>The <code>wrong_msg</code> is only displayed if the score is zero and there are no other messages.</p>
+<p>If no <code>answers</code> key is provided, the grader reads from the <code>expect</code> or <code>answer</code> parameter of the <code>customresponse</code> tag (see below). However, note that when using a <code>ListGrader</code> or a <code>SingleListGrader</code>, the <code>answers</code> key is required.</p>
 <h2 id="option-listing">Option Listing<a class="headerlink" href="#option-listing" title="Permanent link"> # </a></h2>
 <p>Here is the full list of options specific to an <code>ItemGrader</code>.</p>
 <div class="codehilite"><pre><span></span><span class="n">grader</span> <span class="o">=</span> <span class="n">ItemGrader</span><span class="p">(</span>
     <span class="n">answers</span><span class="o">=</span><span class="n">answer</span> <span class="ow">or</span> <span class="nb">tuple</span> <span class="n">of</span> <span class="n">answers</span><span class="p">,</span>
-    <span class="n">wrong_msg</span><span class="o">=</span><span class="n">string</span> <span class="p">(</span><span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">wrong_msg</span><span class="o">=</span><span class="nb">str</span> <span class="p">(</span><span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div></div>
         

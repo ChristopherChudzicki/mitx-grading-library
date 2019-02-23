@@ -94,6 +94,12 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../edx/">edX Syntax</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -118,6 +124,12 @@
                             
 <li >
     <a href="../matrix_grader/matrix_grader/">MatrixGrader</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../matrixfunctions/">User-Defined Matrix Functions</a>
 </li>
 
                         
@@ -211,10 +223,6 @@
                 
             <li class="second-level"><a href="#matrixgrader-default-functions">MatrixGrader Default Functions</a></li>
                 
-            <li class="second-level"><a href="#the-specify_domain-decorator">The specify_domain decorator</a></li>
-                
-                <li class="third-level"><a href="#an-example">An Example</a></li>
-                <li class="third-level"><a href="#configuring-specify_domain">Configuring specify_domain</a></li>
     </ul>
 </div></div>
         <div class="col-md-9" role="main">
@@ -241,6 +249,7 @@
 <li><code>arccos(x)</code> Inverse Cosine</li>
 <li><code>arcsin(x)</code> Inverse Sine</li>
 <li><code>arctan(x)</code> Inverse Tangent</li>
+<li><code>arctan2(x, y)</code> Four-quadrant Inverse Tangent*</li>
 <li><code>arcsec(x)</code> Inverse Secant*</li>
 <li><code>arccsc(x)</code> Inverse Cosecant*</li>
 <li><code>arccot(x)</code> Inverse Cotangent*</li>
@@ -268,134 +277,14 @@
 <h2 id="matrixgrader-default-functions">MatrixGrader Default Functions<a class="headerlink" href="#matrixgrader-default-functions" title="Permanent link"> # </a></h2>
 <p>In <code>MatrixGrader</code> problems, all <code>FormulaGrader</code> functions are available by default, as are the following extra functions:</p>
 <ul>
-<li><code>abs(x)</code>: absolute value; input can be number or vector</li>
-<li><code>adj(x)</code>: conjugate transpose, same as <code>ctrans(x)</code></li>
+<li><code>abs(x)</code>: absolute value of a scalar or magnitude of a vector</li>
+<li><code>adj(x)</code>: Hermitian adjoint, same as <code>ctrans(x)</code></li>
 <li><code>cross(x, y)</code>: cross product, inputs must be 3-component vectors</li>
 <li><code>ctrans(x)</code>: conjugate transpose, same as <code>adj(x)</code></li>
 <li><code>det(x)</code>: determinant, input must be square matrix</li>
 <li><code>norm(x)</code>: Frobenius norm, works for scalars, vectors, and matrices</li>
-<li><code>tr(x)</code>: transpose, input must be square matrix</li>
+<li><code>trans(x)</code>: transpose</li>
 <li><code>trace(x)</code>: trace</li>
-</ul>
-<h2 id="the-specify_domain-decorator">The <code>specify_domain</code> decorator<a class="headerlink" href="#the-specify_domain-decorator" title="Permanent link"> # </a></h2>
-<p>The <code>mitxgraders</code> library provides <code>specify_domain</code> as a way to provide students with useful error messages when adding extra functions to a <code>MatrixGrader</code> problem.</p>
-<h3 id="an-example">An Example<a class="headerlink" href="#an-example" title="Permanent link"> # </a></h3>
-<p>Suppose we have a <code>MatrixGrader</code> problem in which we want to provide students with a function <code>rot(vector, axis, angle)</code> that rotates a vector about a given axis by a given angle. We can provide such a function with the <code>user_functions</code> configuration key.</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mitxgraders</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">rot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="gp">... </span><span class="sd">    Rotate vec by angle around axis. Implemented by Euler-Rodrigues formula:</span>
-<span class="gp">... </span><span class="sd">    https://en.wikipedia.org/wiki/Euler-Rodrigues_formula</span>
-<span class="gp">...</span><span class="sd"></span>
-<span class="gp">... </span><span class="sd">    Arguments:</span>
-<span class="gp">... </span><span class="sd">        vec: a 3-component MathArray to rotate</span>
-<span class="gp">... </span><span class="sd">        axis: a 3-component MathArray to rotate around</span>
-<span class="gp">... </span><span class="sd">        angle: a number</span>
-<span class="gp">... </span><span class="sd">    &quot;&quot;&quot;</span>
-<span class="gp">... </span>    <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">unit_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">omega</span> <span class="o">=</span> <span class="n">unit_axis</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">crossed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">vec</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">crossed</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">crossed</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">MathArray</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grader_1</span> <span class="o">=</span> <span class="n">MatrixGrader</span><span class="p">(</span>
-<span class="gp">... </span>   <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;rot(v, [0, 0, 1], theta)&#39;</span><span class="p">,</span>
-<span class="gp">... </span>   <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">],</span>
-<span class="gp">... </span>   <span class="n">sample_from</span><span class="o">=</span><span class="p">{</span>
-<span class="gp">... </span>       <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="n">RealVectors</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-<span class="gp">... </span>   <span class="p">},</span>
-<span class="gp">... </span>   <span class="n">user_functions</span><span class="o">=</span><span class="p">{</span>
-<span class="gp">... </span>       <span class="s1">&#39;rot&#39;</span><span class="p">:</span> <span class="n">rot</span>
-<span class="gp">... </span>   <span class="p">}</span>
-<span class="gp">... </span><span class="p">)</span>
-</pre></div>
-
-
-<h4 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link"> # </a></h4>
-<p>Our <code>rot(vec, axis, angle)</code> function works, but if students supply the function above with arguments of incorrect type, they receive unhelpful error messages:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">grader_1</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;rot(v, theta, [0, 0, 1])&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="n">StudentFacingError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
-<span class="go">There was an error evaluating rot(...). Its input does not seem to be in its domain.</span>
-</pre></div>
-
-
-<h4 id="a-solution">A solution<a class="headerlink" href="#a-solution" title="Permanent link"> # </a></h4>
-<p>To provide students with more useful error messages, we can use <code>specify_domain</code>, a decorator function imported from <code>mitxgraders</code>. <a href="https://dbader.org/blog/python-decorators">Decorator Functions</a> are "higher-order functions" that take functions as input and produce functions as output, usually modifying the input function's behavior. In our case, <code>specify_domain</code> will modify the behavior of <code>rot</code> so as to provide more helpful <code>StudentFacingError</code>s.</p>
-<p>Here we go:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@specify_domain</span><span class="p">(</span><span class="n">input_shapes</span><span class="o">=</span><span class="p">[[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;rot&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">rot_with_error_messages</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="c1"># rot(vec, axis, angle) defined above</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">rot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Define new grader using rot_with_error_messages</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">grader_2</span> <span class="o">=</span> <span class="n">MatrixGrader</span><span class="p">(</span>
-<span class="gp">... </span>   <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;rot(v, [0, 0, 1], theta)&#39;</span><span class="p">,</span>
-<span class="gp">... </span>   <span class="n">variables</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">],</span>
-<span class="gp">... </span>   <span class="n">sample_from</span><span class="o">=</span><span class="p">{</span>
-<span class="gp">... </span>       <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="n">RealVectors</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-<span class="gp">... </span>   <span class="p">},</span>
-<span class="gp">... </span>   <span class="n">user_functions</span><span class="o">=</span><span class="p">{</span>
-<span class="gp">... </span>       <span class="s1">&#39;rot&#39;</span><span class="p">:</span> <span class="n">rot_with_error_messages</span>
-<span class="gp">... </span>   <span class="p">}</span>
-<span class="gp">... </span><span class="p">)</span>
-</pre></div>
-
-
-<p>Now if a student calls <code>rot</code> with incorrect inputs, they receive a more helpful message:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">grader_2</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="s1">&#39;rot(v, theta, [0, 0, 1])&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="n">StudentFacingError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;br/&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
-<span class="go">There was an error evaluating function rot(...)</span>
-<span class="go">1st input is ok: received a vector of length 3 as expected</span>
-<span class="go">2nd input has an error: received a scalar, expected a vector of length 3</span>
-<span class="go">3rd input has an error: received a vector of length 3, expected a scalar</span>
-</pre></div>
-
-
-<h3 id="configuring-specify_domain">Configuring specify_domain<a class="headerlink" href="#configuring-specify_domain" title="Permanent link"> # </a></h3>
-<p>The decorator <code>specify_domain</code> accepts optional keyword arguments and should be called in either of two equivalent ways:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@specify_domain</span><span class="p">(</span><span class="n">keyword_arguments</span><span class="p">)</span>                <span class="c1"># doctest: +SKIP</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">target_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">pass</span> <span class="c1"># do whatever you want</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or, equivalently:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">target_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">,</span><span class="n">z</span><span class="p">):</span>                     
-<span class="gp">... </span>    <span class="k">pass</span> <span class="c1"># do whatever you want</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">decorated_function</span> <span class="o">=</span> <span class="n">specify_domain</span><span class="p">(</span><span class="n">keyword_arguments</span><span class="p">)(</span><span class="n">target_function</span><span class="p">)</span> <span class="c1"># doctest: +SKIP</span>
-</pre></div>
-
-
-<p>The keyword arguments are:</p>
-<ul>
-<li><code>input_shapes</code>: A list that indicates the shape of each input to the target function. This list <strong>must</strong> have the same length as the number of arguments in the target function. Each list element should be one of the following:<ul>
-<li><code>1</code>: indicates input is scalar</li>
-<li><code>k</code> (positive integer &gt; 1): indicates input is a k-component vector</li>
-<li><code>[k1, k2, ...]</code>, list of positive integers: means input is an array of shape (k1, k2, ...)</li>
-<li><code>(k1, k2, ...)</code>, tuple of positive integers: equivalent to <code>[k1, k2, ...]</code></li>
-<li><code>'square'</code> (string): indicates a square matrix of any dimension</li>
-</ul>
-</li>
-<li><code>display_name</code> (str): Function name to be used in error messages
-    defaults to <code>None</code>, meaning that the function's <code>__name__</code> attribute is used.</li>
-</ul>
-<p>So, for example,</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@specify_domain</span><span class="p">(</span><span class="n">input_shapes</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">4</span><span class="p">],</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;myfunc&#39;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">some_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">pass</span>
-</pre></div>
-
-
-<p>specifies that the function <code>some_func</code> must be called with three arguments:</p>
-<ul>
-<li>1st argument: scalar,</li>
-<li>2nd argument: 3 by 2 matrix, and a</li>
-<li>3rd argument: 4-component vector.</li>
 </ul></div>
         
     </div>
