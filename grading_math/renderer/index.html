@@ -238,20 +238,24 @@ or
 </pre></div>
 
 
-<p>The <code>&lt;formulaequationinput/&gt;</code> tag:
- - uses server-side parsing and rendering,
- - detects some student syntax errors before "Submit" is pressed,
- - can be slow to render,
- - does not display some symbols, such as <code>vecx</code> or <code>hatx</code>,
- - does not display commas, including multivariable functions <code>f(x, y)</code> or vectors <code>[1, 2, 3]</code>, and
- - is not customizable.</p>
-<p>The <code>&lt;textline /&gt;</code> tag:
-  - only renders math if attribute <code>math="1"</code> is specified,
-  - treats the student input as AsciiMath for the purpose of generating a preview and renders the preview with MathJax,
-  - does not perform mathematical syntax validation,
-  - renders very quickly,
-  - supports a much wider array of mathematical symbols than <code>&lt;formulaequationinput/&gt;</code>, and
-  - is highly customizable.</p>
+<p>The <code>&lt;formulaequationinput/&gt;</code> tag:</p>
+<ul>
+<li>uses server-side parsing and rendering,</li>
+<li>detects some student syntax errors before "Submit" is pressed,</li>
+<li>can be slow to render,</li>
+<li>does not display some symbols, such as <code>vecx</code> or <code>hatx</code>,</li>
+<li>does not display commas, including multivariable functions <code>f(x, y)</code> or vectors <code>[1, 2, 3]</code>, and</li>
+<li>is not customizable.</li>
+</ul>
+<p>The <code>&lt;textline /&gt;</code> tag:</p>
+<ul>
+<li>only renders math if attribute <code>math="1"</code> is specified,</li>
+<li>treats the student input as AsciiMath for the purpose of generating a preview and renders the preview with MathJax,</li>
+<li>does not perform mathematical syntax validation,</li>
+<li>renders very quickly,</li>
+<li>supports a much wider array of mathematical symbols than <code>&lt;formulaequationinput/&gt;</code>, and</li>
+<li>is highly customizable.</li>
+</ul>
 <p>However, the <code>&lt;textline/&gt;</code> math display does not always display what you would expect. (For example, <code>1/arctanh(x)</code> displays rather poorly in math-enabled <code>&lt;textline/&gt;</code>s, at least by default.) Because all <code>&lt;textline/&gt;</code> math rendering occurs client-side through Javascript, we can supplement the AsciiMath definitions to handle new situations. We have constructed a series of renderer definitions to supplement the standard AsciiMath definitions in order to provide better previews.</p>
 <h2 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link"> # </a></h2>
 <p>The renderer definitions are located in a javascript file, <code>MJxPrep.js</code>, which should be uploaded to the static assets folder for your course. This javascript file loads two components: symbol definitions and a preprocessor.</p>
